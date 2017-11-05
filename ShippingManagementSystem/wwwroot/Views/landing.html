@@ -1,0 +1,66 @@
+﻿<div class="container" >
+    <!-- Login Button -->
+    <div class="row" style="padding-right: 20px; padding-top: 20px;">
+        <button class="ui right floated basic green button" id="loginBtnShw" onclick="$('#loginTemplate').modal('show');"><i class="fa fa-user-circle-o"></i> &nbsp; &nbsp;Log-in</button>
+    </div>
+    <!-- [End] Login Button-->
+    <div class="row" style="padding-top: 72px;">
+        <div class="ui stackable two columns grid"  style="background-color:rgba(255, 216,0, 0.8); ">
+            <div class="column">
+                <div style="color: green; padding: 60px">
+                    <div class="row">
+                        <h1 style="font-size:90px;">Jades Cargo Services, Inc.</h1>
+                    </div>
+                    <div class="row" >
+                        <h3 style="font-size: 30px;">Sea and Air Door-to-Door Services</h3>
+                    </div>
+
+                    <div class="row" style="font-style:italic; font-size: 20px;">
+                        "Your trusted Cargo Delivery Company for 26 years "
+                    </div>
+                    
+                </div>
+               
+            </div>
+            <div class="column" style="padding: 60px;">
+                <div class="ui raised segment">
+                    <div class="ui grid">
+                        <div class="twelve wide stretched column">
+                            <div class="ui segment">
+                                This is an stretched grid column. This segment will always match the tab height
+                            </div>
+                        </div>
+                        <div class="four wide column">
+                            <div class="ui vertical fluid right tabular menu">
+                                <a class="active item">
+                                    Bio
+                                </a>
+                                <a class="item">
+                                    Pics
+                                </a>
+                                <a class="item">
+                                    Companies
+                                </a>
+                                <a class="item">
+                                    Links
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Area [Start]-->
+    <!-- Login Modal [Start]-->
+    <div class="ui basic modal" id="loginTemplate">
+
+    </div>
+    <!-- Login Modal [end]-->
+    <!-- Modal Area [End]-->
+</div>
+<script type="text/javascript">
+    Common.templateRequest("login.html", "loginTemplate");
+</script>

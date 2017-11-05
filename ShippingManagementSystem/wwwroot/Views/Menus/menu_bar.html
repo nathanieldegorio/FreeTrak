@@ -1,0 +1,23 @@
+﻿<div class="ui inverted stackable menu" style="width: 100%;">
+    <a class="item" onclick="$('.menu_bar').slideToggle(); $('#menulbl').toggle()">
+        <i class="list layout icon"></i><span id="menulbl" style="display:none; text-align:center;">Menu</span>
+    </a>
+    <a class="item active menu_bar" onclick="$('.menu_admin').hide(); $('#menu_admin').slideToggle(); $('.menu_bar').removeClass('active'); $(this).addClass('active');">
+        Administration
+    </a>
+    <a class="item menu_bar" onclick="$('.menu_admin').hide(); $('#menu_customer').slideToggle();  $('.menu_bar').removeClass('active'); $(this).addClass('active');">
+        Customer Accounts
+    </a>
+    <a class="item menu_bar" onclick="$('.menu_admin').hide(); $('#menu_sea').slideToggle();  $('.menu_bar').removeClass('active'); $(this).addClass('active');">
+        Sea Shipments
+    </a>
+    <a class="item menu_bar" onclick="$('.menu_admin').hide(); $('#menu_air').slideToggle();  $('.menu_bar').removeClass('active'); $(this).addClass('active');">
+        Air Shipments
+    </a>
+    <a class="item menu_bar" onclick="$('.menu_admin').hide(); $('#menu_billing').slideToggle();  $('.menu_bar').removeClass('active'); $(this).addClass('active');">
+        Billing
+    </a>
+    <a class="item menu_bar" onclick="$('.menu_admin').hide(); $('#menu_reports').slideToggle();  $('.menu_bar').removeClass('active'); $(this).addClass('active');">
+        Reports
+    </a>
+</div>
