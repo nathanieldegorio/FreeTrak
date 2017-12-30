@@ -1,19 +1,22 @@
 ﻿<div class="ui container" style="padding-top:20px;" >
     <div class="ui raised segment">
         <div class="ui form" id="frm_branch" style="display: none;">
-            <h4 class="ui dividing header">Branch Details</h4>
+            <h4 class="ui dividing header">Payment Type Details</h4>
             <div class="field">
                
-                <div class="two fields">
+                <div class="fields">
                     
-                    <div class="field">
-                        <label>Branch Name</label>
-                        <input type="text" maxlength="50" id="branchName">
+                    <div class="twelve wide field">
+                        <label>Payment Type Name</label>
+                        <input type="text" maxlength="50" id="paymentTypeName">
                     </div>
                    
-                    <div class="field">
-                        <label>Branch Code</label>
-                        <input type="text" id="branchCode">
+                    <div class="four wide field">
+                        <label>Account billed to:</label>
+                        <select class="ui fluid dropdown" id="paymentAccount">
+                            <option value="1">Consignee</option>
+                            <option value="0">Shipper</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -21,13 +24,15 @@
                 
                 <div class="fields">
                     <div class="twelve wide field">
-                        <label>Address</label>
-                        <input type="text" id="address">
+                        &nbsp;
                     </div>
                     <div class="four wide field">
-                            <label>Parent Branch</label>
-                            <select class="ui fluid dropdown" id="parentBranch">
-                                
+                            <label>Billing Period :</label>
+                            <select class="ui fluid dropdown" id="paymentCollect">
+                                <option value="1">Bill on Shipment</option>
+                                <option value="0">Bill On Delivery</option>
+                                <option value="2">Collect on Shipment</option>
+                                <option value="3">Collect On Delivery</option>
                             </select>
                         
                     </div>
@@ -39,7 +44,7 @@
                <div class="ui stackable four columns grid">
                    <div class="column">&nbsp;</div>
                    <div class="column"><button class="ui green button" style="width: 100%;" onclick=" save();">Save</button></div>
-                   <div class="column"><button class="ui red button" style="width: 100%;" onclick=" Common.custAlert('Warning!', 'You are about to disable this branch. This will remove it from the current listing.', 'Yes',  disable , 'No', {}, branchSelected)    ">Disable</button></div>
+                   <div class="column"><button class="ui red button" style="width: 100%;" onclick="disable();">Disable</button></div>
                    <div class="column"><button class="ui button" style="width: 100%;" onclick="clearForm()">Cancel</button></div>
                </div>
            </div>
@@ -53,13 +58,13 @@
             <div class="ui stackable grid">
                 <div class="two column row">
                     <div class="column">
-                        <h4 class="ui dividing header">Branches</h4>
+                        <h4 class="ui dividing header">User Designations</h4>
                         <a class="ui teal label" onclick="$('#list_branch').fadeOut(); $('#frm_branch').fadeIn(); branchSelected = 'New';">Create New</a>
                     </div>
                     <div class="right floated column">
                         <div class="ui action input" style="width:100%;">
-                            <input type="text" placeholder="Search..." id="brnch_searchkey">
-                            <button class="ui button" onclick="search($('#brnch_searchkey').val())">Search</button>
+                            <input type="text" placeholder="Search..." id="ud_searchkey">
+                            <button class="ui button" onclick="search($('#ud_searchkey').val())">Search</button>
                         </div>
                     </div>
                 </div>
@@ -72,14 +77,12 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Code</th>
                             <th>Name</th>
-                            <th>Adress</th>
-                            <th>Parent</th>
-
+                             <th>Billed to </th>
+                            <th>Billed On</th>
                         </tr>
                     </thead>
-                    <tbody id="branchList">
+                    <tbody id="udList">
                         
                     </tbody>
                 </table>
@@ -93,46 +96,37 @@
     $(document).ready(function () {
         branchSelected = "New";
         search('');
-        loadBranchList();
     });
 
-    function disable(branchSelected)
+    function disable()
     {
-        Common.serviceRequest("../api/Branches/Remove", { 'BranchID': branchSelected, }, function (data) {
+        Common.serviceRequest("../api/Administration/PaymentType/Remove", { 'PaymentTypeID': branchSelected, }, function (data) {
             Common.custAlert('Success', data);
             clearForm();
             search('');
         }, 'text');
     }
 
-    function loadBranchList()
-    {
-        Common.serviceRequest("../api/Branches/List", { 'search': '' }, function (data) {
-
-            Common.loopToTemplate(data, `<option value='{{branchID}}'>{{branchName}}</option>`, "#parentBranch");
-            $("#parentBranch").html("<option value=''>None</option>" + $("#parentBranch").html());
-
-        });
-
-    }
+    
     function search(searchkey)
     {
-         Common.serviceRequest("../api/Branches/List", { 'search': searchkey }, function (data) {
+        Common.serviceRequest("../api/Administration/PaymentType/List", { 'search': searchkey }, function (data) {
+            
              Common.loopToTemplate(data,`<tr>
-                            <td style="font-weight: bold;" class="right aligned"><i class="fa fa-edit" onclick="edit('{{branchID}}')"></i></td>
-                            <td style="text-decoration:underline; font-weight: bold;">{{branchCode}}</td>
-                            <td>{{branchName}}</td>
-                            <td>{{address}}</td>
-                            <td>{{vw_ParentBranch}}</td>
-                        </tr>`, "#branchList");
+                            <td style="font-weight: bold;" class="right aligned"><i class="fa fa-edit" onclick="edit('{{paymentTypeID}}')"></i></td>
+                            <td style="text-decoration:underline; font-weight: bold;">{{paymentTypeName}}</td>
+                            <td>{{vw_PaymentAccount}}</td>
+                            <td>{{vw_PaymentCollect}}</td>
+                        </tr>`, '#udList', 'json');
 
         });
 
     }
+
     function save()
     {
     
-        Common.serviceRequest("../api/Branches/Create", { 'BranchID': branchSelected, 'BranchName': $('#branchName').val(), 'BranchCode': $('#branchCode').val(), 'ParentBranch': $('#parentBranch').val(), 'Address': $('#address').val() }, function (data) {
+        Common.serviceRequest("../api/Administration/PaymentType/Create", { 'PaymentTypeID': branchSelected, 'PaymentTypeName': $('#paymentTypeName').val(), 'PaymentAccount': $('#paymentAccount').val(), 'PaymentCollect': $('#paymentCollect').val() }, function (data) {
             Common.custAlert('Success', data);
             clearForm();
             search('');
@@ -143,21 +137,20 @@
     function edit(brID)
     {
         branchSelected = brID;
-        Common.serviceRequest("../api/Branches/Get", { 'id': brID }, function (data) {
+        Common.serviceRequest("../api/Administration/PaymentType/Get", { 'id': brID }, function (data) {
             Common.loadToTemplate(data, $("#frm_branch").html(), "#frm_branch", function () {
                 $('#list_branch').fadeOut(); $('#frm_branch').fadeIn();
-                alert(data.branchID);
-                $('#branchList').val(data.branchID);
+               
+               
             });
         });
     }
 
     function clearForm()
     {
-        $('#branchName').val('');
-        $('#branchCode').val('');
-        $('#parentBranch').val('');
-        $('#address').val('');
+        $('#paymentTypeName').val('');
+        $('#paymentAccount').val('1');
+        $('#paymentCollect').val('1');
         branchSelected = "New";
         $('#frm_branch').fadeOut(); $('#list_branch').fadeIn();
     }

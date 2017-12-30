@@ -1,0 +1,140 @@
+﻿<div class="ui container" style="padding-top:20px;" >
+    <div class="ui raised segment">
+        <div class="ui form" id="frm_branch" style="display: none;">
+            <h4 class="ui dividing header">Collection Type Details</h4>
+            <div class="field">
+               
+                <div class="fields">
+                    
+                    <div class="twelve wide field">
+                        <label>Collection Type Name</label>
+                        <input type="text" maxlength="50" id="collectionTypeName">
+                    </div>
+                   
+                    <div class="four wide field">
+                        <label>Confirmation of Payment:</label>
+                        <select class="ui fluid dropdown" id="collectionTypeDelay">
+                            <option value="0">Immediate</option>
+                            <option value="1">1 day</option>
+                            <option value="3">3 days</option>
+                            <option value="5">5 work</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+          
+           <div>
+               <div class="ui stackable four columns grid">
+                   <div class="column">&nbsp;</div>
+                   <div class="column"><button class="ui green button" style="width: 100%;" onclick=" save();">Save</button></div>
+                   <div class="column"><button class="ui red button" style="width: 100%;" onclick="disable();">Disable</button></div>
+                   <div class="column"><button class="ui button" style="width: 100%;" onclick="clearForm()">Cancel</button></div>
+               </div>
+           </div>
+                    
+            
+            
+        </div>
+        
+        <div class="ui segment" id="list_branch">
+
+            <div class="ui stackable grid">
+                <div class="two column row">
+                    <div class="column">
+                        <h4 class="ui dividing header">Collection Types</h4>
+                        <a class="ui teal label" onclick="$('#list_branch').fadeOut(); $('#frm_branch').fadeIn(); branchSelected = 'New';">Create New</a>
+                    </div>
+                    <div class="right floated column">
+                        <div class="ui action input" style="width:100%;">
+                            <input type="text" placeholder="Search..." id="ud_searchkey">
+                            <button class="ui button" onclick="search($('#ud_searchkey').val())">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <hr/>
+            <br/>
+            <div>
+                <table class="ui striped selectable table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                             <th>Confirmation Delay</th>
+                        </tr>
+                    </thead>
+                    <tbody id="udList">
+                        
+                    </tbody>
+                </table>
+            </div>
+         </div>
+    </div>
+</div>
+<script src="../../Libraries/Common/CommonScripts.js"></script>
+<script type="text/javascript">
+    var branchSelected=null;
+    $(document).ready(function () {
+        branchSelected = "New";
+        search('');
+    });
+
+    function disable()
+    {
+        Common.serviceRequest("../api/Administration/CollectionType/Remove", { 'CollectionTypeID': branchSelected, }, function (data) {
+            Common.custAlert('Success', data);
+            clearForm();
+            search('');
+        }, 'text');
+    }
+
+    
+    function search(searchkey)
+    {
+        Common.serviceRequest("../api/Administration/CollectionType/List", { 'search': searchkey }, function (data) {
+            
+             Common.loopToTemplate(data,`<tr>
+                            <td style="font-weight: bold;" class="right aligned"><i class="fa fa-edit" onclick="edit('{{collectionTypeID}}')"></i></td>
+                            <td style="text-decoration:underline; font-weight: bold;">{{collectionTypeName}}</td>
+                            <td>{{collectionTypeDelay}}</td>
+                     
+                        </tr>`, '#udList', 'json');
+
+        });
+
+    }
+
+    function save()
+    {
+    
+        Common.serviceRequest("../api/Administration/CollectionType/Create", { 'CollectionTypeID': branchSelected, 'CollectionTypeName': $('#collectionTypeName').val(), 'CollectionTypeDelay': $('#collectionTypeDelay').val() }, function (data) {
+            Common.custAlert('Success', data);
+            clearForm();
+            search('');
+
+        },'text');
+    }
+
+    function edit(brID)
+    {
+        branchSelected = brID;
+        Common.serviceRequest("../api/Administration/CollectionType/Get", { 'id': brID }, function (data) {
+            Common.loadToTemplate(data, $("#frm_branch").html(), "#frm_branch", function () {
+                $('#list_branch').fadeOut(); $('#frm_branch').fadeIn();
+               
+               
+            });
+        });
+    }
+
+    function clearForm()
+    {
+        $('#collectionTypeName').val('');
+        $('#collectionTypeDelay').val('0');
+        branchSelected = "New";
+        $('#frm_branch').fadeOut(); $('#list_branch').fadeIn();
+    }
+
+</script>

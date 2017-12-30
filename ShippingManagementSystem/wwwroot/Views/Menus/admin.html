@@ -1,46 +1,46 @@
-﻿
-    <div class="column">
-        <a class="image" href="#">
+﻿    <div class="column menuitem">
+        <a class="image" onclick="menuBtnClick('/Admin/branch.html', this)" >
             <center>
                 <img src="/Assets/icons/admin/user-accounts.png">
                 <span class="ui pointing green basic label" style="width: 100%;">User Accounts</span>
             </center>
         </a>
     </div>
-    <div class="column">
-        <a class="image" href="#">
+    <div class="column menuitem">
+        <a class="image" onclick="menuBtnClick('/Admin/userdesignation.html', this)" >
             <center>
                 <img src="/Assets/icons/admin/user-level.png">
-                <span class="ui pointing green basic label" style="width: 100%;">User Designations</span>
+                <span class="ui pointing green basic label" style="width: 100%;">User Designation</span>
             </center>
         </a>
     </div>
-    <div class="column">
-        <a class="image" href="#">
+    <div class="column menuitem">
+        <a class="image" onclick="menuBtnClick('/Admin/branch.html', this)" >
+            <center>
+                <img src="/Assets/icons/admin/user-accounts.png">
+                <span class="ui pointing green basic label" style="width: 100%;">Branches</span>
+            </center>
+        </a>
+    </div>
+    <div class="column menuitem">
+        <a class="image" onclick="menuBtnClick('/Admin/paymenttype.html', this)" >
             <center>
                 <img src="/Assets/icons/admin/payment-types.png">
                 <span class="ui pointing green basic label" style="width: 100%;">Payment Types</span>
             </center>
         </a>
     </div>
-    <div class="column">
-        <a class="image" href="#">
+    <div class="column menuitem">
+        <a class="image" onclick="menuBtnClick('/Admin/collectiontype.html', this)" >
             <center>
                 <img src="/Assets/icons/admin/collection-types.png">
                 <span class="ui pointing green basic label" style="width: 100%;">Collection Types</span>
             </center>
         </a>
     </div>
-    <div class="column">
-        <a class="image" href="#">
-            <center>
-                <img src="/Assets/icons/admin//cargo-type.png">
-                <span class="ui pointing green basic label" style="width: 100%;">Cargo Types</span>
-            </center>
-        </a>
-    </div>
-    <div class="column">
-        <a class="image" href="#">
+    
+    <div class="column menuitem">
+        <a class="image" onclick="menuBtnClick('/Admin/cargounit.html', this)" >
             <center>
                 <img src="/Assets/icons/admin/cargo-units.png">
                 <span class="ui pointing green basic label" style="width: 100%;">Cargo Units</span>
@@ -48,3 +48,21 @@
         </a>
     </div>
 
+<script>
+    function menuBtnClick(url, obj) {
+        $(obj).hide();
+        $(obj).parent().prop("style","border:1px solid #CCC; border-radius: 5px; background-color:rgba(128, 128, 128, 0.3)"); //.css("background-color","rgba(255,255,255,0.3)")
+        $(obj).fadeIn('50', function () {
+            Common.templateRequest(url, 'mainform');
+            $('.menu_admin').fadeOut('10');
+            $('#mainform').fadeIn('10');
+        });
+        $('#mainform').focus();
+       // style = "";
+    }
+
+    $('.menuitem').hover(function () {
+        $('.menuitem').prop("style", "");
+        $(this).prop("style", "border-radius: 5px; background-color:rgba(128, 128, 128, 0.1)");
+    });
+</script>

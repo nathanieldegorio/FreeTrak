@@ -1,0 +1,647 @@
+﻿<div class="ui container" style="padding-top:20px;" >
+    <div class="ui raised segment">
+        <div class=" ui segment" id="frm_headShip"  style="display: none;">
+            
+        </div>
+        <div class="ui form" id="frm_branch" style="display: none;">
+            <h4 class="ui dividing header">Shipment Details</h4>
+            
+            <div class="field">
+                
+                <div class="fields">
+                    <div class="four wide field">
+                        <label>Origin Branch</label>
+                        <select class="ui fluid dropdown" id="routeOrigin"></select>
+
+                    </div>
+                    <div class="four wide field">
+                            <label>Destination Branch</label>
+                            <select class="ui fluid dropdown" id="routeDestination" onchange="loadRoute(this.value)">
+                            </select>
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div class="field">
+
+                <div class="fields">
+
+                    <div class="seven wide field">
+                        <label>First Name</label>
+                        <input type="text" maxlength="50" id="firstname">
+                    </div>
+
+                    <div class="seven wide field">
+                        <label>Last Name</label>
+                        <input type="text" id="f_Lastname">
+                    </div>
+                    <div class="two wide field">
+                        <label>&nbsp;</label>
+                        <button class="ui button" onclick="$('#customerSearchModal').modal('show');">Search</button>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+
+                <div class="fields">
+                    <div class="twelve wide field">
+                        <label>Address</label>
+                        <input type="text" id="address">
+                    </div>
+                    <div class="four wide field">
+                        <label>Company</label>
+                        <input type="text" maxlength="50" id="company">
+                    </div>
+                </div>
+
+            </div>
+            <div class="field">
+
+                <div class="fields">
+                    <div class="four wide field">
+                        <label>Waybill No.</label>
+                        <input type="text" maxlength="50" id="">
+                    </div>
+
+                    <div class="four wide field">
+                        <label>PR No.</label>
+                        <input type="text" maxlength="50" id="">
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Total Gross Charge <i class="fa fa-money" style="color: green;" onclick="computeTotalGross();" ></i></label>
+                       
+                        <input type="text" maxlength="50" id="totalGrossCharge" onchange="computeNetCharge()">
+                    </div>
+
+                    <div class="four wide field">
+                        <label>EVAT (in %)</label>
+                        <input type="text" maxlength="50" id="evat" value="12">
+                    </div>
+                </div>
+
+            </div>
+            <div class="field">
+
+                <div class="fields">
+                    <div class="four wide field">
+                        <label>Dimension Charge</label>
+                        <input type="text" maxlength="50" id="dimensionCharge">
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Weight Charge</label>
+                        <input type="text" maxlength="50" id="weightCharge">
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Value Charge</label>
+                        <input type="text" maxlength="50" id="valueCharge">
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Pickup Charge</label>
+                        <input type="text" maxlength="50" id="pickupCharge">
+                    </div>
+                </div>
+
+            </div>
+            <div class="field">
+
+                <div class="fields">
+                    <div class="four wide field">
+                        <label>Payment Type</label>
+                        <select id="paymentTypeList"></select>
+                    </div>
+                   
+
+                </div>
+
+            </div>
+            <div class="field">
+
+                <div class="fields">
+                    <div class="four wide field">
+                        <label>Delivery Charge</label>
+                        <input type="text" maxlength="50" id="deliveryCharge" />
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Discount (in %)</label>
+                        <input type="text" maxlength="50" id="discount"onchange="computeNetCharge()">
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Adjustment</label>
+                        <input type="text" maxlength="50" id="adjustment" onchange="computeNetCharge()">
+                    </div>
+                    <div class="four wide field">
+                        <label>Total Net Charge</label>
+                        <input type="text" maxlength="50" id="totalNetCharge" onchange="computeNetCharge()">
+                    </div>
+                </div>
+
+            </div>
+            <div class="field">
+                <table class="ui striped selectable table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Unit</th>
+                            <th>Quantity</th>
+                            <th>Flat Rate</th>
+                            <th>Total CBM</th>
+                            <th>Total Weight</th>
+                            <th>Total Charge</th>
+                        </tr>
+                    </thead>
+                    <tbody id="branchList"></tbody>
+                    <tfoot style="background:#808080">
+                        <tr>
+                            
+
+                            <td colspan="3"><select id="unitList" ></select></td>
+                            <td><input class="ui input" id="listQty" placeholder="Quantity" /></td>
+                            <td><input class="ui input" id="listRate" placeholder="Flate Rate" /></td>
+                            <td>
+                                <div class="fields" style="background:#c7c0c0; padding: 5px; border-radius: 5px;">
+                                    <div class="field">
+                                        <label>
+                                            L
+                                        </label>
+                                        <input class="ui input" id="listLength" placeholder="Length" />
+                                    </div>
+                                    <div class="field">
+                                        <label>
+                                            W
+                                        </label>
+                                        <input class="ui input" id="listWidth" placeholder="Width" />
+                                    </div>
+                                    <div class="field">
+                                        <label>
+                                            H
+                                        </label>
+                                        <input class="ui input" id="listHeight" placeholder="Height" />
+                                    </div>
+                                </div>
+                            </td>
+                            <td><input class="ui input" id="listWeight" placeholder="Weight" /></td>
+                            <td>
+                                <div class="ui buttons">
+                                    <button class="ui button teal" onclick="addToTable()" id="rowAdd">+</button>
+                                    <button class="ui button orange" onclick="removeFromTable()" id="rowRemove" style="display: none;">-</button>
+                                    <button class="ui button green" onclick="editTable()" id="rowEdit" style="display: none;"><i class="fa fa-save"></i></button>
+                                </div>
+                            </td>
+                       
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+           <div>
+               <div class="ui stackable four columns grid">
+                   <div class="column">&nbsp;</div>
+                   <div class="column"><button class="ui green button" style="width: 100%;" onclick=" save();">Save Draft</button></div>
+                   <div class="column"><button class="ui green button" style="width: 100%;" onclick=" saveFinal();">Submit for Loading</button></div>
+                   <div class="column"><button class="ui button" style="width: 100%;" onclick="clearForm()">Cancel</button></div>
+               </div>
+           </div>
+                    
+            
+            
+        </div>
+        
+        <div class="ui segment" id="list_branch">
+
+            <div class="ui stackable grid">
+                <div class="two column row">
+                    <div class="column">
+                        <h4 class="ui dividing header">Sea Shipments</h4>
+                        <a class="ui teal label" onclick="$('#shipperSearchModal').modal('show');">Create New</a>
+                    </div>
+                    <div class="right floated column">
+                        <div class="ui action input" style="width:100%;">
+                            <input type="text" placeholder="Search..." id="brnch_searchkey">
+                            <button class="ui button" onclick="search($('#brnch_searchkey').val())">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <hr/>
+            <br/>
+            <div>
+                <table class="ui striped selectable table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Shipper</th>
+                            <th>Consignee</th>
+                            <th>Origin</th>
+                            <th>Destination</th>
+                            <th>Date Created</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody id="transactionList">
+                        
+                    </tbody>
+                    
+                </table>
+            </div>
+         </div>
+    </div>
+</div>
+<div class="ui modal" id="customerSearchModal">
+    <div class="ui segment">
+        <div class="ui stackable grid">
+            <div class="two column row">
+                <div class="column">
+                    <h4 class="ui dividing header">Consignee Search</h4>
+
+                </div>
+                <div class="right floated column">
+                    <div class="ui action input" style="width:100%;">
+                        <input type="text" placeholder="Search..." id="cust_searchkey">
+                        <button class="ui button" onclick="searchCustomer($('#cust_searchkey').val())">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <hr />
+        <br />
+        <div>
+            <table class="ui striped selectable table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>Results</th>
+
+                    </tr>
+                </thead>
+                <tbody id="customerList"></tbody>
+                
+            </table>
+        </div>
+       
+    </div>
+</div>
+
+<div class="ui modal" id="shipperSearchModal">
+    <div class="ui segment">
+        <div class="ui stackable grid">
+            <div class="two column row">
+                <div class="column">
+                    <h4 class="ui dividing header">Shipper Search</h4>
+
+                </div>
+                <div class="right floated column">
+                    <div class="ui action input" style="width:100%;">
+                        <input type="text" placeholder="Search..." id="ship_searchkey">
+                        <button class="ui button" onclick="searchShipper($('#ship_searchkey').val()); ">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <hr />
+        <br />
+        <div>
+            <table class="ui striped selectable table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>Results</th>
+
+                    </tr>
+                </thead>
+                <tbody id="shipperList"></tbody>
+
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<script src="../../Libraries/Common/CommonScripts.js"></script>
+<script type="text/javascript">
+    var branchSelected = null;
+    var madeData = [];
+    var selectedEntryID = '';
+    $(document).ready(function () {
+        branchSelected = "New";
+        search('');
+        loadBranchList();
+        loadUnitList('');
+        $("#routeOrigin").html("<option value='" + Common.getLoginDetails("branch")+"'>" + Common.getLoginDetails("vw_branch")+"</option>" );
+        loadPaymentTypes();
+
+    });
+
+  
+
+    function loadBranchList() {
+        Common.serviceRequest("../api/SeaDestination/ListForBranch", { 'branch': Common.getLoginDetails("branch") }, function (data) {
+            Common.loopToTemplate(data, `<option value='{{routeID}}'>{{vw_RouteDestination}}</option>`, "#routeDestination");
+            $("#routeDestination").html("<option value='0'>None</option>" + $("#routeDestination").html());
+
+
+
+        });
+
+    }
+    function guid() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+            s4() + '-' + s4() + s4() + s4();
+    }
+
+    function addToTable()
+    {
+        var obj = [];
+
+        obj['itemID'] = guid();
+        obj['cargounit'] = $('#unitList').val();
+        obj['vw_cargounit'] = $('#unitList option:selected').text();
+        obj['quantity'] = $('#listQty').val();
+        obj['flatrate'] = $('#listRate').val();
+        obj['length'] = $('#listLength').val();
+        obj['width'] = $('#listWidth').val();
+        obj['height'] = $('#listHeight').val();
+        obj['dimension'] = (obj['length'] /100) * (obj['width']/100) * (obj['height']/100);
+        obj['weight'] = $('#listWeight').val();
+
+        if (obj['flatrate'] != "" && obj['flatrate'] != undefined && obj['flatrate'] != 0)
+        {
+            obj['charge'] = obj['flatrate'] * obj['quantity'] ;
+        } else
+        {
+            var weightCHg = obj['weight'] * $('#weightCharge').val();
+            var dimCHg = obj['dimension'] * $('#dimensionCharge').val();
+            if (parseFloat(dimCHg) >= parseFloat(weightCHg))
+            {
+                obj['charge'] = dimCHg * obj['quantity'];
+            } else
+            {
+                obj['charge'] = weightCHg * obj['quantity'];
+            }
+        }
+
+
+
+
+        madeData.push(obj);
+
+        Common.loopToTemplate(madeData, `<tr>
+                            <td style="font-weight: bold;" class="right aligned"><i class="fa fa-list" onclick="loadTableEntry('{{itemID}}')"></i></td>
+                            <td>{{vw_cargounit}}</td>
+                            <td>{{quantity}}</td>
+                            <td>{{flatrate}}</td>
+                            <td>{{dimension}}</td>
+                            <td>{{weight}}</td>
+                            <td>{{charge}}</td>
+                        </tr>`, "#branchList");
+
+        computeTotalGross();
+
+    }
+
+
+    function editTable() {
+
+        removeid = selectedEntryID;
+        removeFromTable(removeid);
+
+        var obj = [];
+
+        obj['itemID'] = removeid;
+        obj['cargounit'] = $('#unitList').val();
+        obj['vw_cargounit'] = $('#unitList option:selected').text();
+        obj['quantity'] = $('#listQty').val();
+        obj['flatrate'] = $('#listRate').val();
+        obj['length'] = $('#listLength').val();
+        obj['width'] = $('#listWidth').val();
+        obj['height'] = $('#listHeight').val();
+        obj['dimension'] = (obj['length'] / 100) * (obj['width'] / 100) * (obj['height'] / 100);
+        obj['weight'] = $('#listWeight').val();
+
+        if (obj['flatrate'] != "" && obj['flatrate'] != undefined && obj['flatrate'] != 0) {
+            obj['charge'] = obj['flatrate'] * obj['quantity'];
+        } else {
+            var weightCHg = obj['weight'] * $('#weightCharge').val();
+            var dimCHg = obj['dimension'] * $('#dimensionCharge').val();
+            if (parseFloat(dimCHg) >= parseFloat(weightCHg)) {
+                obj['charge'] = dimCHg * obj['quantity'];
+            } else {
+                obj['charge'] = weightCHg * obj['quantity'];
+            }
+        }
+
+
+
+
+        madeData.push(obj);
+
+        Common.loopToTemplate(madeData, `<tr>
+                            <td style="font-weight: bold;" class="right aligned"><i class="fa fa-list" onclick="loadTableEntry('{{itemID}}')"></i></td>
+                            <td>{{vw_cargounit}}</td>
+                            <td>{{quantity}}</td>
+                            <td>{{flatrate}}</td>
+                            <td>{{dimension}}</td>
+                            <td>{{weight}}</td>
+                            <td>{{charge}}</td>
+                        </tr>`, "#branchList");
+        $('#rowRemove').hide();
+        $('#rowEdit').hide();
+        $('#rowAdd').show();
+    }
+
+    function removeFromTable() {
+        removeid = selectedEntryID;
+        var newData = [];
+        for (var i = madeData.length - 1; i >= 0; i--) {
+            if (madeData[i].itemID != removeid) {
+                newData.push(madeData[i]);
+
+            }
+        }
+
+        madeData = newData;
+
+        Common.loopToTemplate(madeData, `<tr>
+                            <td style="font-weight: bold;" class="right aligned"><i class="fa fa-list" onclick="loadTableEntry('{{itemID}}')"></i></td>
+                            <td>{{vw_cargounit}}</td>
+                            <td>{{quantity}}</td>
+                            <td>{{flatrate}}</td>
+                            <td>{{dimension}}</td>
+                            <td>{{weight}}</td>
+                            <td>{{charge}}</td>
+                        </tr>`, "#branchList");
+        $('#rowRemove').hide();
+        $('#rowEdit').hide();
+        $('#rowAdd').show();
+        computeTotalGross();
+    }
+
+
+    function loadTableEntry(editid)
+    {
+        selectedEntryID = editid;
+        for (var i = madeData.length - 1; i >= 0; i--) {
+            if (madeData[i].itemID == selectedEntryID) {
+                $('#unitList').val(madeData[i].cargounit);
+                $('#listQty').val(madeData[i].quantity);
+                $('#listRate').val(madeData[i].flatrate);
+                $('#listLength').val(madeData[i].length );
+                $('#listWidth').val(madeData[i].width);
+                $('#listHeight').val(madeData[i].height);
+                $('#listWeight').val(madeData[i].weight);
+
+            }
+        }
+        $('#rowAdd').hide();
+        $('#rowRemove').show();
+        $('#rowEdit').show();
+    }
+
+
+    function computeTotalGross() {
+        var totalGrossCharge = 0;
+        for (var i = madeData.length - 1; i >= 0; i--) {
+            totalGrossCharge = totalGrossCharge + madeData[i].charge; 
+        }
+
+        $('#totalGrossCharge').val(totalGrossCharge);
+        computeNetCharge();
+      
+    }
+
+    function computeNetCharge()
+    {
+        $('#totalNetCharge').val($('#totalGrossCharge').val() * ((100 - $('#discount').val()) / 100) + ($('#totalGrossCharge').val() * ($('#evat').val() / 100)) - $('#adjustment').val());
+
+    }
+
+
+    function searchCustomer(searchkey) {
+        Common.serviceRequest("../api/Customer/List", { 'search': searchkey }, function (data) {
+            Common.loopToTemplate(data, `<tr>
+                            <td style="font-weight: bold;" class="right aligned"><i class="fa fa-edit" onclick="loadCustomer('{{customerProfileID}}')"></i></td>
+                            <td style="text-decoration:underline; font-weight: bold;">{{company}}</td>
+                            <td>{{f_Lastname}} , {{firstname}}</td>
+                            <td>{{address}}</td>
+                            <td>{{homePhone}}</td>
+                        </tr>`, "#customerList");
+
+        });
+
+    }
+
+    function searchShipper(searchkey) {
+        Common.serviceRequest("../api/Customer/List", { 'search': searchkey }, function (data) {
+            Common.loopToTemplate(data, `<tr>
+                            <td style="font-weight: bold;" class="right aligned"><i class="fa fa-edit" onclick="$('#list_branch').fadeOut(); $('#frm_branch').fadeIn(); loadShipper('{{customerProfileID}}'); $('#shipperSearchModal').modal('hide');"></i></td>
+                            <td style="text-decoration:underline; font-weight: bold;">{{company}}</td>
+                            <td>{{f_Lastname}} , {{firstname}}</td>
+                            <td>{{address}}</td>
+                            <td>{{homePhone}}</td>
+                        </tr>`, "#shipperList");
+
+        });
+
+    }
+
+
+    function loadCustomer(brID) {
+        branchSelected = brID;
+        Common.serviceRequest("../api/Customer/Get", { 'id': brID }, function (data) {
+            Common.loadToTemplate(data, $("#frm_branch").html(), "#frm_branch", function () {
+                $('#list_branch').fadeOut(); $('#frm_branch').fadeIn();
+                $('#customerSearchModal').modal('hide');
+            });
+        });
+    }
+    function loadShipper(brID) {
+        branchSelected = brID;
+        Common.serviceRequest("../api/Customer/Get", { 'id': brID }, function (data) {
+            $('#frm_headShip').show();
+            var mData = [];
+            mData.push(data);
+            Common.loopToTemplate(mData, `<h3> Shipment for: {{f_Lastname}} , {{firstname}}</h3>`, '#frm_headShip');
+
+        });
+    }
+    
+    function search(searchkey)
+    {
+        Common.serviceRequest("../api/SeaShipment/List", { 'search': searchkey }, function (data) {transactionList
+             Common.loopToTemplate(data,`<tr>
+                            <td style="font-weight: bold;" class="right aligned"><i class="fa fa-list" onclick="edit('{{trackingNo}}')"></i></td>
+                          
+                            <td>{{vw_shipper}}</td>
+                              <td>{{conLastname}} , {{conFirstname}}</td>
+                              <td>{{vw_OriginBranch}}</td>
+                              <td>{{vw_DestinationBranch}}</td>
+                            <td>{{createdon}}</td>
+                        </tr>`, "#transactionList");
+
+        });
+
+    }
+
+    function save()
+    {
+        
+    }
+
+    function loadRoute(brID)
+    {
+    //    branchSelected = brID;
+        Common.serviceRequest("../api/SeaDestination/Get", { 'id': brID }, function (data) {
+            Common.loadToTemplate(data, $("#frm_branch").html(), "#frm_branch", function () {
+
+                $('#list_branch').fadeOut(); $('#frm_branch').fadeIn();
+                $('#routeDestination').val(brID);
+
+            });
+        });
+    }
+
+    function loadUnitList(searchkey) {
+        Common.serviceRequest("../api/Administration/CargoUnit/List", { 'search': searchkey }, function (data) {
+
+            Common.loopToTemplate(data, `<option value='{{cargoUnitID}}'>{{cargoUnitName}}</option>`, '#unitList', 'json');
+
+        });
+
+    }
+
+    function clearForm()
+    {
+        $('#branchName').val('');
+        $('#branchCode').val('');
+        $('#parentBranch').val('');
+        $('#address').val('');
+        branchSelected = "New";
+        $('#frm_branch').fadeOut(); $('#list_branch').fadeIn();
+    }
+
+
+    function loadPaymentTypes() {
+        Common.serviceRequest("../api/Administration/PaymentType/List", { 'search': '' }, function (data) {
+
+            Common.loopToTemplate(data, `<option value="{{paymentTypeID}}">{{paymentTypeName}}</option> `, '#paymentTypeList', 'json');
+
+        });
+
+    }
+
+</script>

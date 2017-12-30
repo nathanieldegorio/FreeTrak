@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-    if (Common.getLoginDetails("userid") == null || Common.getLoginDetails("userid") == "")
+    if (Common.getLoginDetails("userid") == undefined || Common.getLoginDetails("userid") == "")
     {
         defaultLoad();
 
@@ -20,3 +20,4 @@ function sesssionLoad()
 {
     Common.templateRequest("dashboard.html", "main");
 }
+

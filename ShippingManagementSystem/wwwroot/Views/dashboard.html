@@ -35,8 +35,7 @@
                     <div class="ui stackable six columns grid tall stacked segment menu_admin" id="menu_sea" style="padding-top: 10px; display: none;"></div>
 
                     <div class="ui stackable six columns grid tall stacked segment menu_admin" id="menu_air" style="padding-top: 10px; display: none;"></div>
-
-               
+              
                     <div id="mainform" style="display: none;">
 
                     </div>
@@ -98,7 +97,6 @@
         Common.serviceRequest("Account/Notices",
             { 'userid': Common.getLoginDetails("userid")},
             function (data) {
-                console.log(data);
                     //Common.setLoginDetails(data);
                     $("#noticelist").html("");
                     var forAppend = "";

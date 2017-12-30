@@ -1,5 +1,5 @@
 ﻿<div class="column">
-    <a class="image" href="#">
+    <a class="image"onclick="menuBtnClick('/Admin/seashipment.html', this)">
         <center>
             <img src="/Assets/icons/sea/sea-transactions.png">
             <span class="ui pointing green basic label" style="width: 100%;">New / Find Sea Shipment</span>
@@ -7,7 +7,7 @@
     </a>
 </div>
 <div class="column">
-    <a class="image" href="#">
+    <a class="image" onclick="menuBtnClick('/Admin/sealoadlist.html', this)">
         <center>
             <img src="/Assets/icons/sea/sea-loading.png">
             <span class="ui pointing green basic label" style="width: 100%;">Loading List</span>
@@ -15,7 +15,7 @@
     </a>
 </div>
 <div class="column">
-    <a class="image" href="#">
+    <a class="image" onclick="alert(Common.getLoginDetails('branch'));">
         <center>
             <img src="/Assets/icons/sea/sea-receiving.png">
             <span class="ui pointing green basic label" style="width: 100%;">Receving Check List</span>
@@ -23,10 +23,31 @@
     </a>
 </div>
 <div class="column">
-    <a class="image" href="#">
+    <a class="image" onclick="menuBtnClick('/Admin/seadestinationroutes.html', this)">
         <center>
             <img src="/Assets/icons/sea/sea-incident.png">
-            <span class="ui pointing green basic label" style="width: 100%;">Incident Report</span>
+            <span class="ui pointing green basic label" style="width: 100%;">Standard Routes</span>
         </center>
     </a>
 </div>
+
+<script>
+    function menuBtnClick(url, obj) {
+        $(obj).hide();
+        $(obj).parent().prop("style", "border:1px solid #CCC; border-radius: 5px; background-color:rgba(128, 128, 128, 0.3)"); //.css("background-color","rgba(255,255,255,0.3)")
+        $(obj).fadeIn('50', function () {
+            Common.templateRequest(url, 'mainform');
+            $('.menu_admin').fadeOut('10');
+            $('#mainform').fadeIn('10');
+        });
+        $('#mainform').focus();
+        // style = "";
+    }
+
+   
+
+    $('.menuitem').hover(function () {
+        $('.menuitem').prop("style", "");
+        $(this).prop("style", "border-radius: 5px; background-color:rgba(128, 128, 128, 0.1)");
+    });
+</script>

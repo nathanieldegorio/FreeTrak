@@ -49,11 +49,11 @@
             function (data) {
                     
                     if (data.status != "OK") {
-                        swal(data.message);
+                        Common.custAlert('Oops! Something Wen Wrong.',data.message);
                     } else
                     {
                         Common.setLoginDetails(data);
-                        swal("Welcome back Mr. " + Common.getLoginDetails('lastname') + ", " + Common.getLoginDetails('firstname'));
+                        Common.custAlert('Success', "Welcome back Mr. " + Common.getLoginDetails('lastname') + ", " + Common.getLoginDetails('firstname'), 'Ok', function () { location.reload();});
                     }
                 });
     }
@@ -64,12 +64,12 @@
             { 'owner': $('#fld_certOwner').val(), 'username': $('#fld_user').val(), 'password': $('#fld_password').val() },
             function (data) {
                 if (data.status != "OK") {
-                    swal(data.message);
+                    Common.custAlert('Oops! Something Went Wrong.',data.message);
                 } else
                 {
                    
                     Common.setCertificate(data);
-                    swal(data.username);
+                    Common.custAlert('Success', 'Browser has noew been certified. Please login to system.');
                 }
             });
     }

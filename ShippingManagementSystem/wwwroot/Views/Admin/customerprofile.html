@@ -1,19 +1,19 @@
 ﻿<div class="ui container" style="padding-top:20px;" >
     <div class="ui raised segment">
         <div class="ui form" id="frm_branch" style="display: none;">
-            <h4 class="ui dividing header">Branch Details</h4>
+            <h4 class="ui dividing header">Customer Details</h4>
             <div class="field">
                
                 <div class="two fields">
                     
                     <div class="field">
-                        <label>Branch Name</label>
-                        <input type="text" maxlength="50" id="branchName">
+                        <label>First Name</label>
+                        <input type="text" maxlength="50" id="firstname">
                     </div>
                    
                     <div class="field">
-                        <label>Branch Code</label>
-                        <input type="text" id="branchCode">
+                        <label>Last Name</label>
+                        <input type="text" id="f_Lastname">
                     </div>
                 </div>
             </div>
@@ -25,8 +25,8 @@
                         <input type="text" id="address">
                     </div>
                     <div class="four wide field">
-                            <label>Parent Branch</label>
-                            <select class="ui fluid dropdown" id="parentBranch">
+                            <label>Nearest Branch</label>
+                            <select class="ui fluid dropdown" id="cityBranch">
                                 
                             </select>
                         
@@ -34,7 +34,58 @@
                 </div>
                 
             </div>
-          
+            <div class="field">
+
+                <div class="fields">
+                    <div class="four wide field">
+                        <label>Company</label>
+                        <input type="text" maxlength="50" id="company">
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Gender</label>
+                        <select class="ui fluid dropdown" id="gender" >
+                            <option value="male">
+                                Male
+                            </option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Email</label>
+                        <input type="text" maxlength="50" id="email">
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Priority Client</label>
+                        <select class="ui fluid dropdown" id="priorityClient">
+                            <option value="0">No</option>
+                            <option value="1">
+                                Yes
+                            </option>
+                            
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="field">
+
+                <div class="fields">
+                    <div class="four wide field">
+                        <label>Home Phone:</label>
+                        <input type="text" maxlength="50" id="homephone">
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Office Phone:</label>
+                        <input type="text" maxlength="50" id="officephone">
+                    </div>
+
+                </div>
+
+            </div>
            <div>
                <div class="ui stackable four columns grid">
                    <div class="column">&nbsp;</div>
@@ -53,7 +104,7 @@
             <div class="ui stackable grid">
                 <div class="two column row">
                     <div class="column">
-                        <h4 class="ui dividing header">Branches</h4>
+                        <h4 class="ui dividing header">Customers</h4>
                         <a class="ui teal label" onclick="$('#list_branch').fadeOut(); $('#frm_branch').fadeIn(); branchSelected = 'New';">Create New</a>
                     </div>
                     <div class="right floated column">
@@ -72,11 +123,10 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Code</th>
+                            <th>Company</th>
                             <th>Name</th>
-                            <th>Adress</th>
-                            <th>Parent</th>
-
+                            <th>Address</th>
+                            <th>Contact No.</th>
                         </tr>
                     </thead>
                     <tbody id="branchList">
@@ -98,32 +148,33 @@
 
     function disable(branchSelected)
     {
-        Common.serviceRequest("../api/Branches/Remove", { 'BranchID': branchSelected, }, function (data) {
+        Common.serviceRequest("../api/Customer/Remove", { 'BranchID': branchSelected, }, function (data) {
             Common.custAlert('Success', data);
             clearForm();
             search('');
         }, 'text');
     }
 
-    function loadBranchList()
-    {
+    function loadBranchList() {
         Common.serviceRequest("../api/Branches/List", { 'search': '' }, function (data) {
 
-            Common.loopToTemplate(data, `<option value='{{branchID}}'>{{branchName}}</option>`, "#parentBranch");
-            $("#parentBranch").html("<option value=''>None</option>" + $("#parentBranch").html());
+            Common.loopToTemplate(data, `<option value='{{branchID}}'>{{branchName}}</option>`, "#cityBranch");
+            $("#cityBranch").html("<option value=''>None</option>" + $("#cityBranch").html());
 
         });
 
     }
+
+   
     function search(searchkey)
     {
-         Common.serviceRequest("../api/Branches/List", { 'search': searchkey }, function (data) {
+        Common.serviceRequest("../api/Customer/List", { 'search': searchkey }, function (data) {
              Common.loopToTemplate(data,`<tr>
-                            <td style="font-weight: bold;" class="right aligned"><i class="fa fa-edit" onclick="edit('{{branchID}}')"></i></td>
-                            <td style="text-decoration:underline; font-weight: bold;">{{branchCode}}</td>
-                            <td>{{branchName}}</td>
+                            <td style="font-weight: bold;" class="right aligned"><i class="fa fa-edit" onclick="edit('{{customerProfileID}}')"></i></td>
+                            <td style="text-decoration:underline; font-weight: bold;">{{company}}</td>
+                            <td>{{f_Lastname}} , {{firstname}}</td>
                             <td>{{address}}</td>
-                            <td>{{vw_ParentBranch}}</td>
+                            <td>{{homePhone}}</td>
                         </tr>`, "#branchList");
 
         });
@@ -132,7 +183,7 @@
     function save()
     {
     
-        Common.serviceRequest("../api/Branches/Create", { 'BranchID': branchSelected, 'BranchName': $('#branchName').val(), 'BranchCode': $('#branchCode').val(), 'ParentBranch': $('#parentBranch').val(), 'Address': $('#address').val() }, function (data) {
+        Common.serviceRequest("../api/Customer/Create", { 'CustomerProfileID': branchSelected, 'Firstname': $('#firstname').val(), 'f_Lastname': $('#f_Lastname').val(), 'Company': $('#company').val(), 'Address': $('#address').val(), 'CityBranch': $('#cityBranch').val(), 'HomePhone': $('#homephone').val(), 'OfficePhone': $('#officephone').val(), 'Email': $('#email').val(), 'PriorityClient': $('#priorityClient').val(), 'gender': $('#gender').val()}, function (data) {
             Common.custAlert('Success', data);
             clearForm();
             search('');
@@ -143,10 +194,10 @@
     function edit(brID)
     {
         branchSelected = brID;
-        Common.serviceRequest("../api/Branches/Get", { 'id': brID }, function (data) {
+        Common.serviceRequest("../api/Customer/Get", { 'id': brID }, function (data) {
             Common.loadToTemplate(data, $("#frm_branch").html(), "#frm_branch", function () {
                 $('#list_branch').fadeOut(); $('#frm_branch').fadeIn();
-                alert(data.branchID);
+               
                 $('#branchList').val(data.branchID);
             });
         });

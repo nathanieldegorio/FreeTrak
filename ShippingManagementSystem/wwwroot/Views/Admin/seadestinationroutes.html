@@ -1,32 +1,19 @@
 ﻿<div class="ui container" style="padding-top:20px;" >
     <div class="ui raised segment">
         <div class="ui form" id="frm_branch" style="display: none;">
-            <h4 class="ui dividing header">Branch Details</h4>
-            <div class="field">
-               
-                <div class="two fields">
-                    
-                    <div class="field">
-                        <label>Branch Name</label>
-                        <input type="text" maxlength="50" id="branchName">
-                    </div>
-                   
-                    <div class="field">
-                        <label>Branch Code</label>
-                        <input type="text" id="branchCode">
-                    </div>
-                </div>
-            </div>
+            <h4 class="ui dividing header">Route Destination Details</h4>
+            
             <div class="field">
                 
                 <div class="fields">
-                    <div class="twelve wide field">
-                        <label>Address</label>
-                        <input type="text" id="address">
+                    <div class="four wide field">
+                        <label>Origin Branch</label>
+                        <select class="ui fluid dropdown" id="routeOrigin"></select>
+
                     </div>
                     <div class="four wide field">
-                            <label>Parent Branch</label>
-                            <select class="ui fluid dropdown" id="parentBranch">
+                            <label>Destination Branch</label>
+                            <select class="ui fluid dropdown" id="routeDestination">
                                 
                             </select>
                         
@@ -34,7 +21,54 @@
                 </div>
                 
             </div>
-          
+            <div class="field">
+
+                <div class="fields">
+                    <div class="four wide field">
+                        <label>Dimension Charge</label>
+                        <input type="text" maxlength="50" id="dimensionCharge">
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Weight Charge</label>
+                        <input type="text" maxlength="50" id="weightCharge">
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Value Charge</label>
+                        <input type="text" maxlength="50" id="valueCharge">
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Pickup Charge</label>
+                        <input type="text" maxlength="50" id="pickupCharge">
+                    </div>
+                </div>
+
+            </div>
+            <div class="field">
+
+                <div class="fields">
+                    <div class="four wide field">
+                        <label>Delivery Charge</label>
+                        <input type="text" maxlength="50" id="deliveryCharge">
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Discount</label>
+                        <input type="text" maxlength="50" id="discount">
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Adjustment</label>
+                        <input type="text" maxlength="50" id="adjustment">
+                    </div>
+
+                   
+
+                </div>
+
+            </div>
            <div>
                <div class="ui stackable four columns grid">
                    <div class="column">&nbsp;</div>
@@ -53,7 +87,7 @@
             <div class="ui stackable grid">
                 <div class="two column row">
                     <div class="column">
-                        <h4 class="ui dividing header">Branches</h4>
+                        <h4 class="ui dividing header">Routes</h4>
                         <a class="ui teal label" onclick="$('#list_branch').fadeOut(); $('#frm_branch').fadeIn(); branchSelected = 'New';">Create New</a>
                     </div>
                     <div class="right floated column">
@@ -72,11 +106,8 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Code</th>
-                            <th>Name</th>
-                            <th>Adress</th>
-                            <th>Parent</th>
-
+                            <th>Route</th>
+                            
                         </tr>
                     </thead>
                     <tbody id="branchList">
@@ -94,36 +125,43 @@
         branchSelected = "New";
         search('');
         loadBranchList();
+        $("#routeOrigin").html("<option value='" + Common.getLoginDetails("branch")+"'>" + Common.getLoginDetails("vw_branch")+"</option>" );
+       
+       
     });
 
     function disable(branchSelected)
     {
-        Common.serviceRequest("../api/Branches/Remove", { 'BranchID': branchSelected, }, function (data) {
+        Common.serviceRequest("../api/SeaDestination/Remove", { 'RouteID': branchSelected, }, function (data) {
             Common.custAlert('Success', data);
             clearForm();
             search('');
         }, 'text');
     }
 
-    function loadBranchList()
-    {
+    function loadBranchList() {
         Common.serviceRequest("../api/Branches/List", { 'search': '' }, function (data) {
 
-            Common.loopToTemplate(data, `<option value='{{branchID}}'>{{branchName}}</option>`, "#parentBranch");
-            $("#parentBranch").html("<option value=''>None</option>" + $("#parentBranch").html());
+            Common.loopToTemplate(data, `<option value='{{branchID}}'>{{branchName}}</option>`, "#routeDestination");
+            $("#routeDestination").html("<option value='0'>None</option>" + $("#routeDestination").html());
 
+           
+            
         });
-
+        
+       
+      
     }
+
+   
     function search(searchkey)
     {
-         Common.serviceRequest("../api/Branches/List", { 'search': searchkey }, function (data) {
+        Common.serviceRequest("../api/SeaDestination/List", { 'search': searchkey }, function (data) {
              Common.loopToTemplate(data,`<tr>
-                            <td style="font-weight: bold;" class="right aligned"><i class="fa fa-edit" onclick="edit('{{branchID}}')"></i></td>
-                            <td style="text-decoration:underline; font-weight: bold;">{{branchCode}}</td>
-                            <td>{{branchName}}</td>
-                            <td>{{address}}</td>
-                            <td>{{vw_ParentBranch}}</td>
+                            <td style="font-weight: bold;" class="right aligned"><i class="fa fa-edit" onclick="edit('{{routeID}}')"></i></td>
+                            
+                            <td>{{vw_RouteOrigin}} to {{vw_RouteDestination}}</td>
+                           
                         </tr>`, "#branchList");
 
         });
@@ -132,7 +170,7 @@
     function save()
     {
     
-        Common.serviceRequest("../api/Branches/Create", { 'BranchID': branchSelected, 'BranchName': $('#branchName').val(), 'BranchCode': $('#branchCode').val(), 'ParentBranch': $('#parentBranch').val(), 'Address': $('#address').val() }, function (data) {
+        Common.serviceRequest("../api/SeaDestination/Create", { 'RouteID': branchSelected, 'RouteOrigin': $('#routeOrigin').val(), 'RouteDestination': $('#routeDestination').val(), 'DimensionCharge': $('#dimensionCharge').val(), 'WeightCharge': $('#weightCharge').val(), 'ValueCharge': $('#valueCharge').val(), 'PickupCharge': $('#pickupCharge').val(), 'DeliveryCharge': $('#deliveryCharge').val(), 'Discount': $('#discount').val(), 'Adjusmtent': $('#adjustment').val(), 'lastupdatedby': Common.getLoginDetails("userid")}, function (data) {
             Common.custAlert('Success', data);
             clearForm();
             search('');
@@ -143,11 +181,11 @@
     function edit(brID)
     {
         branchSelected = brID;
-        Common.serviceRequest("../api/Branches/Get", { 'id': brID }, function (data) {
+        Common.serviceRequest("../api/SeaDestination/Get", { 'id': brID }, function (data) {
             Common.loadToTemplate(data, $("#frm_branch").html(), "#frm_branch", function () {
+                alert(JSON.stringify(data));
                 $('#list_branch').fadeOut(); $('#frm_branch').fadeIn();
-                alert(data.branchID);
-                $('#branchList').val(data.branchID);
+               
             });
         });
     }
