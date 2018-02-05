@@ -1,48 +1,93 @@
 ﻿<!DOCTYPE html>
 <html>
+
+   
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>JCS Shipping and Billing Management System</title>
-    
-    <script src="Libraries/Jquery/jquery-3.2.1.min.js"></script>
-    <script src="Libraries/Jquery/js.cookie.js"  type="application/javascript"></script>
-    <link href="Libraries/Semantic/semantic.css" rel="stylesheet" />
-    <link href="Libraries/FontAwesome/css/font-awesome.css" rel="stylesheet" />
-    <script src="Libraries/Semantic/semantic.js"></script>
-    <script src="Libraries/Common/CommonScripts.js"></script>
-    <script src="Libraries/Common/main.js"></script>
-    <script src="Libraries/Sweetalert/sweetalert.min.js"></script>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #printarea * {
+                visibility: visible;
+               
+            }
+
+            #printarea {
+                position: absolute;
+                top: 40px;
+                left: 30px;
+                height: 100%;
+            }
+        }
+    </style>
+   
+</head>
+
+<body>
+    <div id="preprocess">
+
+    </div>   
+
+    <div id="main">
         
-        body {
-        background-image:url('../Assets/main-bg.jpg');
+    </div>
+
+
+    <!--Import jQuery before materialize.js-->
+    <script src="Libraries/Jquery/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="../../Libraries/qrjs/qrcode.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            modLoad('main', "Account/login.html");
+           
+
+        });
+        function alert(content, header)
+        {
+            if (header === undefined)
+            {
+                header = "Alert";
+            }
+
+            var alertHtml = `<div id="alertModal" class="modal">
+                                <div class="modal-content">
+                                    <h4>`+header+`</h4>
+                                    <p>`+content+`</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+                                </div>
+                            </div>`;
+
+            $('#preprocess').html(alertHtml);
+            $('#alertModal').modal();
+            $('#alertModal').modal('open');            
         }
 
+        function modLoad( id, url, callback, params)
+        {
+            $.ajax({
+                url: "Views/" + url,
+                data: {},
+                success: function (data) {
+                    $('#' + id).html(data);
+                },
+                dataType: "text"
+            });
+        }
+        
 
-    </style>
-</head>
-<body>
-    <div id="main" class="ui container">
-
-    </div>
-    <div class="ui tiny modal" id="alertModal">
-        <div class="modal header">
-            Warning
-        </div>
-        <div class="modal content">
-            This will do something
-        </div>
-        <div class="actions">
-            <div class="ui red basic cancel  button">
-                <i class="remove icon"></i>
-                No
-            </div>
-            <div class="ui green ok  button">
-                <i class="checkmark icon"></i>
-                Ok
-            </div>
-        </div>
-    </div>
+    </script>
 </body>
 </html>

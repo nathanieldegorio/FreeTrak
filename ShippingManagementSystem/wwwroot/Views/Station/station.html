@@ -1,0 +1,681 @@
+﻿
+<center>
+   
+            <div class="card" style="max-width: 60%;">
+                <div class="card-image">
+                    <img src="../../Assets/main-bg.jpg" style="opacity: 0.4;">
+                    <span class="card-title"><h1 style="color: black;">Welcome to the Sticker Station</h1></span>
+                   
+                </div>
+                <div class="card-content">
+                    <div class="row">
+                         <div class="col s1">&nbsp;</div>
+                        <a class="waves-effect waves-light btn modal-trigger btn-large col s3" onclick="createWayBill()">New Waybill</a>
+                        <div class="col s1">&nbsp;</div>
+                        <a class="waves-effect waves-light btn modal-trigger btn-large col s3" onclick="$('#editmodal').modal('open');">Edit Waybill</a>
+                        <div class="col s1">&nbsp;</div>
+                        <a class="waves-effect waves-light btn modal-trigger btn-large  col s3" onclick="$('#returnmodal').modal('open');">Cancel Item No.</a>
+
+                       </div>
+
+                        <div class="row">
+                            <div class="col s1">&nbsp;</div>
+                            <a class="waves-effect waves-light btn modal-trigger btn-large col s11" onclick="signout()">SIGN OUT</a>
+
+                        </div>
+
+
+                    </div>
+
+            </div>
+
+</center>
+
+
+<div id="editmodalcont">
+
+    <!-- Modal Structure -->
+    <div id="editmodal" class="modal">
+        <div class="modal-content">
+           
+            <div class="row">
+                <div class="input-field col s6">
+                    <input value="" id="edit_tracking" type="text" class="validate">
+                    <label class="active" for="first_name2">Tracking No.:</label>
+                </div>
+                <div class="input-field col s2">
+                   <button class="btn btn-large" onclick="loadWayBill($('#edit_tracking').val())">Load Details</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input value="" id="first_name2" type="text" class="validate">
+                    <label class="active" for="first_name2">Origin</label>
+                </div>
+                <div class="input-field col s6">
+                    <select id="edt_destinationList">
+                        <option value="" disabled selected>Choose your option</option>
+
+                    </select>
+                    <label class="active">Destination</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s6">
+                    <select id="edt_shipperList">
+                        <option value="" disabled selected>Choose your option</option>
+
+                    </select>
+                    <label class="active" for="first_name2">Shipper:</label>
+                </div>
+                <div class="input-field col s6">
+                    <select id="edt_consigneeList">
+                        <option value="" disabled selected>Choose your option</option>
+
+                    </select>
+                    <label class="active" for="first_name2">Consignee</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s4">
+                    <input value="" id="edt_packages" type="text" class="validate">
+                    <label class="active" for="first_name2">No. of Packages</label>
+                </div>
+                <div class="input-field col s4">
+                    <input value="" id="first_name2" type="text" class="validate">
+                    <label class="active" for="first_name2">Additional Packages</label>
+                </div>
+               
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-action modal-close waves-effect waves-green btn-flat" onclick="window.print();">Save &amp; Print New Stickers</a>
+            <a class="modal-action modal-close waves-effect waves-green btn-flat" onclick="window.print();">Save &amp; Print All Stickers</a>
+        </div>
+    </div>
+</div>
+
+<div id="newmodalcont">
+   
+    <!-- Modal Structure -->
+    <div id="newmodal" class="modal">
+        <div class="modal-content">
+            <h4>New Waybill</h4>
+            <h4>Tracking No. <i id="trackingno"></i></h4>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input value="Head Office" id="first_name2" type="text" class="validate" disabled>
+                    <label class="active" for="first_name2">Origin</label>
+                </div>
+                <div class="input-field col s6">
+                    <select id="destinationList">
+                        <option value="" disabled selected>Choose your option</option>
+                      
+                    </select>
+                    <label class="active" >Destination</label>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="input-field col s6">
+                    <select id="shipperList">
+                        <option value="" disabled selected>Choose your option</option>
+
+                    </select>
+                    <label class="active" for="first_name2">Shipper:</label>
+                </div>
+                <div class="input-field col s6">
+                    <select id="consigneeList">
+                        <option value="" disabled selected>Choose your option</option>
+
+                    </select>
+                    <label class="active" for="first_name2">Consignee</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s4">
+                    <input value="" id="packages_count" type="text" class="validate">
+                    <label class="active" for="first_name2">No. of Packages</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-action modal-close waves-effect waves-green btn-flat" onclick="generateStickers('111111', '2222', '3333', '44444', '5');">Save &amp; Print  Stickers</a>
+        </div>
+    </div>
+</div>
+
+
+<div id="returnstickers">
+
+    <!-- Modal Structure -->
+    <div id="returnmodal" class="modal">
+        <div class="modal-content">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input value="" id="rem_TrackingNo" type="text" class="validate">
+                    <label class="active" for="first_name2">Tracking No.:</label>
+                </div>
+                <div class="input-field col s6">
+                    <input value="" id="rem_ItemNo" type="text" class="validate">
+                    <label class="active" for="first_name2">Sticker No. (e.g. 1234567-001):</label>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-action modal-close waves-effect waves-green btn-flat" onclick="removeItem($('#rem_TrackingNo').val(),$('#rem_ItemNo').val() )">Return Stickers</a>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="printarea" style=" visibility: hidden;">
+   
+</div>
+
+
+<script type="text/javascript">
+    $('.modal').modal();
+    createlocalDB();
+    function generateStickers(trackingno, route, from, to, number)
+    {
+        $("#printarea").html("");
+        trackingno = $('#trackingno').html();
+        number = $('#packages_count').val()
+        savewaybill(trackingno, $('#origin').val(), $('#destinationList').val(), $('#shipperList').val(), $('#consigneeList').val(), $('#packages_count').val());
+
+        console.log($('#destinationList'));
+        var destinaton = $("#destinationList option:selected").text();
+        var shipper = $("#shipperList option:selected").text();
+        var consignee = $("#consigneeList option:selected").text();
+
+        for (var i = 1; i <= number; i++)
+        {
+            createSticker(trackingno, i, 'Head Office to ' + destinaton, shipper, consignee);
+            if (i == number)
+            {
+                
+                printStickers(trackingno, number);
+                
+            }
+        }
+        
+        window.print();
+    }
+    function printStickers(trackingno, number) {
+        for (var i = 1; i <= number; i++)
+        {
+            insertItem(trackingno, i);
+            var qrcode = new QRCode("qrcode" + i, {
+                text: trackingno + "-" + pad(i, 5),
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+    }
+    function createSticker(trackingno, itemno, route, from, to)
+    {
+        var tenplate = `<div class="container" style="border: 1px solid black;">
+                            <div class="row">
+                                <div class="col s4">
+                                    &nbsp; &nbsp; Jades Cargo Services
+                                    <div id="qrcode`+ itemno+`" style="width: 100px; height: 200px; padding: 10px; width: 800px;"></div>
+                                </div>
+                                <div class="col s8" style="font-size: 20px; padding-top: 15px;">
+                                    Tracking No:
+                                    <br />
+                                    <u>`+ trackingno + ` - ` + pad(itemno, 5)+`</u>
+                                    <br />
+                                    Route :
+                                    <br />
+                                    <u>`+ route +`</u>
+                                    <br />
+                                    To:
+                                    <br />
+                                    <u>`+ to +`</u>
+                                    <br />
+                                    From:
+                                    <br /> <u>`+ from +`</u>
+                                    <br />
+
+                                </div>
+                            </div>
+                        </div>`;
+
+        $("#printarea").html($("#printarea").html() + tenplate);
+        
+       
+    }
+    function pad(n, width, z) {
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    }
+    function randomNumber()
+    {
+        return pad(Math.floor(Math.random() * 20000), 5);
+    }
+    function createWayBill()
+    {
+        var trackingno = pad(randomNumber(), 8);
+       
+        $('#trackingno').html(trackingno);
+        $('#newmodal').modal('open');
+    }
+
+
+    
+
+    var indexedDB;// = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+    var dbGlobal;
+    var dbGl;
+    var dbStore;
+
+    function createlocalDB() {
+        indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+
+        // Open (or create) the database
+        dbGlobal = indexedDB.open("jcsOffDB", 1);
+
+        // Create the schema
+        dbGlobal.onupgradeneeded = function () {
+            dbGl = dbGlobal.result;
+            dbGl.createObjectStore("destinations", { keyPath: "destinationid", unique: false });
+            dbGl.createObjectStore("shippers", { keyPath: "customerid", unique: false });
+            dbGl.createObjectStore("consignees", { keyPath: "customerid", unique: false });
+            dbGl.createObjectStore("waybills", { keyPath: "trackingno", unique: false });
+            dbGl.createObjectStore("items", { keyPath: "itemno", unique: false });
+        };
+        insertUnits();
+        insertShippers();
+        insertConsignees();
+    }
+   
+    function insertUnits() {
+        dbGlobal = indexedDB.open("jcsOffDB", 1);
+        var db;
+        dbGlobal.onsuccess = function (event) {
+            db = event.target.result;
+
+            var tx = db.transaction("destinations", "readwrite");
+            var store = tx.objectStore("destinations");
+
+            var item = {
+                destinationid: '5',
+                destinationname: 'Baguio'
+            };
+
+            var item2 = {
+                destinationid: '2',
+                destinationname: 'Manila'
+            };
+
+            var item3 = {
+                destinationid: '3',
+                destinationname: 'Tagaytay'
+            };
+
+            var item4 = {
+                destinationid: '4',
+                destinationname: 'Ilocos del Norte'
+            };
+
+
+            // Add some data
+            store.put(item);
+            store.put(item2);
+            store.put(item3);
+            store.put(item4);
+
+            tx.oncomplete = function () {
+                db.close();
+            };
+
+
+        };
+        
+        getAllUnits();
+
+    }
+
+    function insertShippers() {
+        dbGlobal = indexedDB.open("jcsOffDB", 1);
+        var db;
+        dbGlobal.onsuccess = function (event) {
+            db = event.target.result;
+
+            var tx = db.transaction("shippers", "readwrite");
+            var store = tx.objectStore("shippers");
+
+            var item = {
+                customerid: '5',
+                name: 'Mock, Name',
+                address: 'Street in Baguio'
+            };
+
+            var item2 = {
+                customerid: '2',
+                name: 'Mock, Name 2',
+                address: 'Street in Baguio 2'
+            };
+
+            var item3 = {
+                customerid: '3',
+                name: 'Mock3, Name',
+                address: 'Streets'
+            };
+
+            var item4 = {
+                customerid: '4',
+                name: 'Mock4, Name',
+                address: 'Street in Davao'
+            };
+
+
+            // Add some data
+            store.put(item);
+            store.put(item2);
+            store.put(item3);
+            store.put(item4);
+
+            tx.oncomplete = function () {
+                db.close();
+            };
+
+
+        };
+
+        getAllShippers();
+    }
+
+    function insertConsignees() {
+        dbGlobal = indexedDB.open("jcsOffDB", 1);
+        var db;
+        dbGlobal.onsuccess = function (event) {
+            db = event.target.result;
+
+            var tx = db.transaction("consignees", "readwrite");
+            var store = tx.objectStore("consignees");
+
+            var item = {
+                customerid: '5',
+                name: 'ConsigneeMock, Name',
+                address: 'Street in Baguio'
+            };
+
+            var item2 = {
+                customerid: '2',
+                name: 'ConsigneeMock, Name 2',
+                address: 'Street in Baguio 2'
+            };
+
+            var item3 = {
+                customerid: '3',
+                name: 'ConsigneeMock3, Name',
+                address: 'Streets'
+            };
+
+            var item4 = {
+                customerid: '4',
+                name: 'ConsigneeMock4, Name',
+                address: 'Street in Davao'
+            };
+
+
+            // Add some data
+            store.put(item);
+            store.put(item2);
+            store.put(item3);
+            store.put(item4);
+
+            tx.oncomplete = function () {
+                db.close();
+            };
+
+
+        };
+
+        getAllConsignees();
+    }
+    
+    function getAllShippers() {
+
+        dbGlobal = indexedDB.open("jcsOffDB", 1);
+        var db;
+        dbGlobal.onsuccess = function (event) {
+            db = event.target.result;
+
+            var tx = db.transaction("shippers", "readwrite");
+            var store = tx.objectStore("shippers");
+
+            var store = tx.objectStore("shippers");
+            var items = store.getAll();
+
+            items.onsuccess = function (event) {
+
+                $.each(event.target.result, function (key, value) {
+                    var tmp = ` <option value="`+value.customerid+`" >` + value.name+`</option>`;
+                    $('#edt_shipperList').html($('#edt_shipperList').html() + tmp);
+                    $('#shipperList').html($('#shipperList').html() + tmp);
+                    $('select').material_select();
+                });
+            };
+
+            
+
+            tx.oncomplete = function () {
+                db.close();
+            };
+
+
+        };
+
+        
+    }
+
+    function getAllConsignees() {
+
+        dbGlobal = indexedDB.open("jcsOffDB", 1);
+        var db;
+        dbGlobal.onsuccess = function (event) {
+            db = event.target.result;
+
+            var tx = db.transaction("consignees", "readwrite");
+            var store = tx.objectStore("consignees");
+
+            var store = tx.objectStore("consignees");
+            var items = store.getAll();
+
+            items.onsuccess = function (event) {
+                console.log(event.target.result);
+                $.each(event.target.result, function (key, value) {
+                    var tmp = ` <option value="` + value.customerid + `" >` + value.name + `</option>`;
+                    $('#edt_consigneeList').html($('#edt_consigneeList').html() + tmp);
+                    $('#consigneeList').html($('#consigneeList').html() + tmp);
+                    $('select').material_select();
+                });
+            };
+
+
+
+            tx.oncomplete = function () {
+                db.close();
+            };
+
+
+        };
+
+
+    }
+    
+    function getAllUnits() {
+
+        dbGlobal = indexedDB.open("jcsOffDB", 1);
+        var db;
+        dbGlobal.onsuccess = function (event) {
+            db = event.target.result;
+
+            var tx = db.transaction("destinations", "readwrite");
+            var store = tx.objectStore("destinations");
+
+            var store = tx.objectStore("destinations");
+            var items = store.getAll();
+
+            items.onsuccess = function (event) {
+
+                $.each(event.target.result, function (key, value) {
+                    var tmp = ` <option value="` + value.destinationid + `" >` + value.destinationname + `</option>`;
+                    $('#destinationList').html($('#destinationList').html() + tmp);
+                    $('#edt_destinationList').html($('#edt_destinationList').html() + tmp);
+                    $('select').material_select();
+                });
+            };
+
+
+
+            tx.oncomplete = function () {
+                db.close();
+            };
+
+
+        };
+
+
+    }
+
+
+    function savewaybill(v_trackingno, v_origin, v_destination, v_shipper, v_consignee, v_packages ) {
+        dbGlobal = indexedDB.open("jcsOffDB", 1);
+        var db;
+        dbGlobal.onsuccess = function (event) {
+            db = event.target.result;
+
+            var tx = db.transaction("waybills", "readwrite");
+            var store = tx.objectStore("waybills");
+
+            var item = {
+                trackingno: v_trackingno,
+                origin: v_origin,
+                destination: v_destination,
+                shipper: v_shipper,
+                consignee: v_consignee,
+                packages: v_packages
+            };
+
+         
+            // Add some data
+            store.put(item);
+       
+            tx.oncomplete = function () {
+                db.close();
+            };
+
+
+        };
+        
+    }
+
+    function insertItem(v_trackingno, v_packageno) {
+        dbGlobal = indexedDB.open("jcsOffDB", 1);
+        var db;
+        dbGlobal.onsuccess = function (event) {
+            db = event.target.result;
+
+            var tx = db.transaction("items", "readwrite");
+            var store = tx.objectStore("items");
+
+            var item = {
+                itemno: v_trackingno+"-"+pad(v_packageno,5),
+                trackingno: v_trackingno
+            };
+            
+            // Add some data
+            store.put(item);
+
+            tx.oncomplete = function () {
+                db.close();
+            };
+
+
+        };
+
+       
+
+    }
+
+    function removeItem(v_trackingno, v_packageno) {
+        dbGlobal = indexedDB.open("jcsOffDB", 1);
+        var db;
+        dbGlobal.onsuccess = function (event) {
+            db = event.target.result;
+
+            var tx = db.transaction("items", "readwrite");
+            var store = tx.objectStore("items");
+
+            var item = {
+                itemno: v_trackingno + "-" + pad(v_packageno, 5),
+                trackingno: v_trackingno
+            };
+
+            // Add some data
+            store.delete(v_packageno);
+
+            tx.oncomplete = function () {
+                db.close();
+            };
+
+
+        };
+
+
+
+    }
+
+
+    function loadWayBill(v_trackingno)
+    {
+        dbGlobal = indexedDB.open("jcsOffDB", 1);
+        var db;
+        dbGlobal.onsuccess = function (event) {
+            db = event.target.result;
+
+            var tx = db.transaction("waybills", "readwrite");
+            var store = tx.objectStore("waybills");
+
+            var store = tx.objectStore("waybills");
+            var items = store.get(v_trackingno);
+
+            items.onsuccess = function (event) {
+                console.log(event.target.result);
+                $('#edt_consigneeList').val(event.target.result.consignee);
+                $('#edt_shipperList').val(event.target.result.shipper);
+                $('#edt_destinationList').val(event.target.result.destination);
+                $('#edt_packages').val(event.target.result.packages);
+                $('select').material_select();
+            };
+
+
+
+            tx.oncomplete = function () {
+                db.close();
+            };
+
+
+        };
+    }
+
+   // <a class="btn-floating btn-large halfway-fab waves-effect waves-light" style="background-color: white; background-image:url('Assets/logo.png'); background-size:contain;"><h1>&nbsp;</h1></a>
+
+    function signout()
+    {
+        modLoad('main', "Account/login.html");
+    }
+</script>
+
+

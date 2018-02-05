@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="iTextSharp" Version="5.5.12" />
+    <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.0.0" />
@@ -19,61 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="wwwroot\Libraries\qrjs\" />
     <Folder Include="wwwroot\Repos\" />
     <Folder Include="wwwroot\Scripts\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\Libraries\Semantic\components\accordion.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\accordion.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\api.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\api.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\checkbox.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\checkbox.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\colorize.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\colorize.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\dimmer.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\dimmer.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\dropdown.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\dropdown.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\embed.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\embed.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\form.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\form.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\modal.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\modal.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\nag.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\nag.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\popup.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\popup.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\progress.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\progress.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\rating.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\rating.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\search.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\search.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\shape.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\shape.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\sidebar.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\sidebar.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\site.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\site.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\state.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\state.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\sticky.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\sticky.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\tab.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\tab.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\transition.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\transition.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\video.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\video.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\visibility.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\visibility.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\visit.js" />
-    <None Include="wwwroot\Libraries\Semantic\components\visit.min.js" />
-    <None Include="wwwroot\Libraries\Semantic\themes\default\assets\fonts\icons.svg" />
-    <None Include="wwwroot\Libraries\Semantic\themes\default\assets\fonts\icons.woff2" />
   </ItemGroup>
 
 </Project>
