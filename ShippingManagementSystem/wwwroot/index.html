@@ -50,7 +50,8 @@
     <script type="text/javascript">
         $(document).ready(function () {
             modLoad('main', "Account/login.html");
-           
+
+            OffDB.initializeDB();
 
         });
         function alert(content, header)
@@ -88,6 +89,95 @@
         }
         
 
+    </script>
+
+    <script>
+        //Offline DB Scripts
+        var OffDB = {};
+        var sDBName = "JCSDBOff";
+        
+        OffDB.initializeDB = function () {
+            var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+
+            // Open (or create) the database
+            var dbGlobal = indexedDB.open(sDBName, 1);
+
+            // Create the schema
+            dbGlobal.onupgradeneeded = function () {
+                dbGl = dbGlobal.result;
+                dbGl.createObjectStore("destinations", { keyPath: "destinationid", unique: false });
+                dbGl.createObjectStore("shippers", { keyPath: "customerid", unique: false });
+                dbGl.createObjectStore("consignees", { keyPath: "customerid", unique: false });
+                dbGl.createObjectStore("waybills", { keyPath: "trackingno", unique: false });
+                dbGl.createObjectStore("items", { keyPath: "itemno", unique: false });
+            };
+        };
+        
+        OffDB.insert = function (DBName, tableName, items) {
+            var dbGlobal = indexedDB.open(sDBName, 1);
+            var db;
+            dbGlobal.onsuccess = function (event) {
+                db = event.target.result;
+
+                var tx = db.transaction(tableName, "readwrite");
+                var store = tx.objectStore(tableName);
+
+                $.each(items, function (key, value) {
+                    store.put(value);
+                });
+
+                tx.oncomplete = function () {
+                    db.close();
+                };
+
+            };
+        };
+        
+        OffDB.getById = function (DBName, tableName, id, callback) {
+            var dbGlobal = indexedDB.open(DBName, 1);
+            var db;
+            dbGlobal.onsuccess = function (event) {
+                db = event.target.result;
+
+                var tx = db.transaction(tableName, "readwrite");
+                var store = tx.objectStore(tableName);
+
+                var items = store.get(id);
+
+                items.onsuccess = function (event) {
+                    callback(event.target.result);
+                };
+
+                tx.oncomplete = function () {
+                    db.close();
+                };
+
+
+            };
+        };
+        
+        OffDB.getAll = function (DBName, tableName, callback) {
+            var dbGlobal = indexedDB.open(DBName, 1);
+            var db;
+            dbGlobal.onsuccess = function (event) {
+                db = event.target.result;
+
+                var tx = db.transaction(tableName, "readwrite");
+                var store = tx.objectStore(tableName);
+
+                var items = store.getAll();
+
+                items.onsuccess = function (event) {
+                    callback(event.target.result);
+                };
+                
+                tx.oncomplete = function () {
+                    db.close();
+                };
+
+
+            };
+        };
     </script>
 </body>
 </html>
