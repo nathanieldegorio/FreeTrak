@@ -1,35 +1,43 @@
 ﻿
-<center>
    
-            <div class="card" style="max-width: 60%;">
-                <div class="card-image">
-                    <img src="../../Assets/main-bg.jpg" style="opacity: 0.4;">
-                    <span class="card-title"><h1 style="color: black;">Welcome to the Sticker Station</h1></span>
-                   
-                </div>
-                <div class="card-content">
-                    <div class="row">
-                         <div class="col s1">&nbsp;</div>
-                        <a class="waves-effect waves-light btn modal-trigger btn-large col s3" onclick="createWayBill()">New Waybill</a>
-                        <div class="col s1">&nbsp;</div>
-                        <a class="waves-effect waves-light btn modal-trigger btn-large col s3" onclick="$('#editmodal').modal('open');">Edit Waybill</a>
-                        <div class="col s1">&nbsp;</div>
-                        <a class="waves-effect waves-light btn modal-trigger btn-large  col s3" onclick="$('#returnmodal').modal('open');">Cancel Item No.</a>
+            <div class="container" style="text-align: center;">
 
-                       </div>
+                <div class="card col s12 m12 l4" style="text-align: left;">
+                    <div class="card-image">
+                        <img src="../../Assets/main-bg.jpg" style="opacity: 0.4;">
+                        <span class="card-title">Station No. 1</span>
+
+                    </div>
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="col l4 m12 s12" style="padding-bottom: 10px;">
+                                    <a class="waves-effect waves-light btn modal-trigger btn-large col s12" onclick="createWayBill()">New Waybill</a>
+                                  
+                                </div>
+                                <div class="col l4 m12 s12" style="padding-bottom: 10px;">
+                                    <a class="waves-effect waves-light btn modal-trigger btn-large col s12" onclick="$('#editmodal').modal('open');">Find Waybill</a>
+                                   
+                                </div>
+                                <div class="col l4 m12 s12" style="padding-bottom: 10px;">
+                                    <a class="waves-effect waves-light btn modal-trigger btn-large col s12" onclick="$('#returnmodal').modal('open');">Cancel Item No.</a>
+                                   
+                                </div>
+
+                            </div>
+                        </div>
 
                         <div class="row">
-                            <div class="col s1">&nbsp;</div>
-                            <a class="waves-effect waves-light btn modal-trigger btn-large col s11" onclick="signout()">SIGN OUT</a>
-
+                            <div class="col l12 m12 s12">
+                                <a class="waves-effect waves-light btn modal-trigger btn-large col s12 red" onclick="signout()">SIGN OUT</a>
+                            </div>
                         </div>
 
 
                     </div>
 
+                </div>
             </div>
-
-</center>
 
 
 <div id="editmodalcont">
@@ -149,7 +157,6 @@
     </div>
 </div>
 
-
 <div id="returnstickers">
 
     <!-- Modal Structure -->
@@ -188,7 +195,7 @@
         $("#printarea").html("");
         trackingno = $('#trackingno').html();
         number = $('#packages_count').val()
-        savewaybill(trackingno, $('#origin').val(), $('#destinationList').val(), $('#shipperList').val(), $('#consigneeList').val(), $('#packages_count').val());
+       // savewaybill(trackingno, $('#origin').val(), $('#destinationList').val(), $('#shipperList').val(), $('#consigneeList').val(), $('#packages_count').val());
 
         console.log($('#destinationList'));
         var destinaton = $("#destinationList option:selected").text();
@@ -211,7 +218,7 @@
     function printStickers(trackingno, number) {
         for (var i = 1; i <= number; i++)
         {
-            insertItem(trackingno, i);
+        //    insertItem(trackingno, i);
             var qrcode = new QRCode("qrcode" + i, {
                 text: trackingno + "-" + pad(i, 5),
                 width: 200,
@@ -271,7 +278,6 @@
         $('#trackingno').html(trackingno);
         $('#newmodal').modal('open');
     }
-    
     function signout()
     {
         modLoad('main', "Account/login.html");

@@ -20,12 +20,19 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <button class="btn waves-effect waves-light" type="button" name="action" onclick=" modLoad('main','Station/station.html');">
+
+                    <button class="btn waves-effect waves-light col s10" type="button" name="action" onclick=" login($('#log_user').val(),$('#log_pass').val());">
                         Login
                         <i class="material-icons right">send</i>
                     </button>
+                    <button class="btn waves-effect waves-light col s2" type="button" name="action" onclick=" qrlogin();">
+                        <i class="material-icons right">business</i>
+                    </button>
+
+                    
                 </div>
             </div>
+          
         </div>
     </div>
 </center>

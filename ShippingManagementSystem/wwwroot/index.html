@@ -36,10 +36,17 @@
 <body>
     <div id="preprocess">
 
-    </div>   
+    </div>  
+        <div id="qrscanmodal" class="modal">
+            <div class="modal-content">
+                <video id="preview"></video>
+            </div>
+        </div>
+   
+
 
     <div id="main">
-        
+       
     </div>
 
 
@@ -47,11 +54,15 @@
     <script src="Libraries/Jquery/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <script src="../../Libraries/qrjs/qrcode.min.js"></script>
+    <script src="Libraries/qrjs/instascan.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             modLoad('main', "Account/login.html");
 
             OffDB.initializeDB();
+            OffDB.insert(sDBName, "userDesignations", designations);
+            OffDB.insert(sDBName, "userAccounts", users);
+
 
         });
         function alert(content, header)
@@ -75,7 +86,6 @@
             $('#alertModal').modal();
             $('#alertModal').modal('open');            
         }
-
         function modLoad( id, url, callback, params)
         {
             $.ajax({
@@ -87,10 +97,63 @@
                 dataType: "text"
             });
         }
-        
+    </script>
+
+    <script>
+         function qrlogin() {
+             qrscan(function (content) {
+                 var params = content.split("|");
+                 login(params[0], params[1]);
+             });
+        }
+
+
+         function login(username, password) {
+             var user = OffDB.getById(sDBName, "userAccounts", username, function (content) {
+                 if (content != undefined)
+                 {
+                     if (password == content.Password) {
+                         modLoad("main", "Station/station.html");
+                     } else {
+                         alert("Please check username/password.", "Error on Login");
+                     }
+                 } else
+                 {
+                     alert("Please check username/password.", "Error on Login");
+                 }
+                 
+             });
+         }
 
     </script>
 
+
+    <script>
+        
+
+        function qrscan(callback)
+        {
+            let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+            scanner.addListener('scan', function (content) {
+                callback(content);
+            });
+            scanner.addListener('abort', function (content) {
+               // console.log(content);
+            });
+            Instascan.Camera.getCameras().then(function (cameras) {
+                if (cameras.length > 0) {
+                    scanner.start(cameras[0]);
+                } else {
+                    console.error('No cameras found.');
+                }
+            }).catch(function (e) {
+                console.error(e);
+            });
+
+            $('#qrscanmodal').modal();
+            $('#qrscanmodal').modal('open');
+        }
+    </script>
     <script>
         //Offline DB Scripts
         var OffDB = {};
@@ -105,11 +168,9 @@
             // Create the schema
             dbGlobal.onupgradeneeded = function () {
                 dbGl = dbGlobal.result;
-                dbGl.createObjectStore("destinations", { keyPath: "destinationid", unique: false });
-                dbGl.createObjectStore("shippers", { keyPath: "customerid", unique: false });
-                dbGl.createObjectStore("consignees", { keyPath: "customerid", unique: false });
-                dbGl.createObjectStore("waybills", { keyPath: "trackingno", unique: false });
-                dbGl.createObjectStore("items", { keyPath: "itemno", unique: false });
+                dbGl.createObjectStore("userDesignations", { keyPath: "userDesignationID", unique: false });
+                dbGl.createObjectStore("userAccounts", { keyPath: "Username", unique: false });
+                
             };
         };
         
@@ -179,5 +240,67 @@
             };
         };
     </script>
+    <script>
+        var designations = new Array();
+        var users = new Array();
+
+        var stationDesignation = {
+            userDesignationID: '1',
+            userDesignationLevel: '1',
+            userDesginationName: 'station'
+        };
+
+        var encoderDesignation = {
+            userDesignationID: '2',
+            userDesignationLevel: '1',
+            userDesginationName: 'encoder'
+        };
+
+
+        var receiverDesignation = {
+            userDesignationID: '3',
+            userDesignationLevel: '1',
+            userDesginationName: 'receiver'
+        };
+        designations.push(stationDesignation);
+        designations.push(encoderDesignation);
+        designations.push(receiverDesignation);
+
+
+        var stationUser = {
+            Username: 'station',
+            Password: 'station123',
+            Lastname: 'Station',
+            FirstName: 'Test User',
+            UserDesignation: '1'
+        };
+
+
+        var encoderUser = {
+            Username: 'encoder',
+            Password: 'encoder123',
+            Lastname: 'Encoder',
+            FirstName: 'Test User',
+            UserDesignation: '2'
+        };
+
+        var receiverUser = {
+            Username: 'receiver',
+            Password: 'receiver123',
+            Lastname: 'Receiver',
+            FirstName: 'Test User',
+            UserDesignation: '3'
+        };
+
+        users.push(stationUser);
+        users.push(encoderUser);
+        users.push(receiverUser);
+
+       
+    </script>
+   
+
+
+
 </body>
 </html>
