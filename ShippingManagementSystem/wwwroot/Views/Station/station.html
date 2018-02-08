@@ -20,7 +20,7 @@
                                    
                                 </div>
                                 <div class="col l4 m12 s12" style="padding-bottom: 10px;">
-                                    <a class="waves-effect waves-light btn modal-trigger btn-large col s12" onclick="$('#returnmodal').modal('open');">Cancel Item No.</a>
+                                    <a class="waves-effect waves-light btn modal-trigger btn-large col s12" onclick="$('#returnmodal').modal('open');">Other Options</a>
                                    
                                 </div>
 
@@ -41,119 +41,189 @@
 
 
 <div id="editmodalcont">
-
     <!-- Modal Structure -->
     <div id="editmodal" class="modal">
         <div class="modal-content">
-           
             <div class="row">
-                <div class="input-field col s6">
-                    <input value="" id="edit_tracking" type="text" class="validate">
-                    <label class="active" for="first_name2">Tracking No.:</label>
-                    <video id="preview"></video>
+                <div class="col s12 m6 l6">
+                    <label class="active" for="edt_trackingno" style="font-size: larger;">Tracking No.</label>
+                    <input value="" id="edt_trackingno" type="text" class="validate" style="font-size: larger;" disabled>
 
-                </div>
-
-                <div class="input-field col s2">
-                   <button class="btn btn-large" onclick="loadWayBill($('#edit_tracking').val())">Load Details</button>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s6">
-                    <input value="" id="first_name2" type="text" class="validate">
-                    <label class="active" for="first_name2">Origin</label>
-                </div>
-                <div class="input-field col s6">
-                    <select id="edt_destinationList">
-                        <option value="" disabled selected>Choose your option</option>
+                <div class="col s12 m6 l6">
+                    <label class="active" for="fld_origin">Origin Branch</label>
+                    <input value="" id="Origin" type="text" class="validate userBranch">
 
-                    </select>
-                    <label class="active">Destination</label>
                 </div>
+                <div class="col s12 m6 l6">
+                    <label class="active" for="efld_originAccounts">Shipper</label>
+                    <input value="" id="efld_originAccount" type="text" class="validate">
+
+                </div>
+
             </div>
-
             <div class="row">
-                <div class="input-field col s6">
-                    <select id="edt_shipperList">
-                        <option value="" disabled selected>Choose your option</option>
+                <div class="col s12 m6 l6">
+                    <label class="active" for="efld_destination">Destination Branch</label>
+                    <input value="" id="efld_destination" type="text" class="validate">
 
-                    </select>
-                    <label class="active" for="first_name2">Shipper:</label>
                 </div>
-                <div class="input-field col s6">
-                    <select id="edt_consigneeList">
-                        <option value="" disabled selected>Choose your option</option>
+                <div class="col s12 m6 l6">
+                    <label class="active" for="efld_destinationAccount">Consignee</label>
+                    <input value="" id="efld_destination" type="text" class="validate">
 
-                    </select>
-                    <label class="active" for="first_name2">Consignee</label>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s4">
-                    <input value="" id="edt_packages" type="text" class="validate">
-                    <label class="active" for="first_name2">No. of Packages</label>
+                <div class="col s12 m6 l6">
+                    <label class="active" for="package_count">No. of Packages</label>
+                    <input value="" id="package_count" type="text" class="validate">
                 </div>
-                <div class="input-field col s4">
-                    <input value="" id="first_name2" type="text" class="validate">
-                    <label class="active" for="first_name2">Additional Packages</label>
+                <div class="col s12 m6 l6">
+                    <label class="active" for="package_count">No. additional of Packages</label>
+                    <input value="" id="package_count_new" type="text" class="validate">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m6 l6">
+                    <label class="active" for="fld_destinationAccount">
+                        <span class="progress" id="consigneeLoading">
+                            <a class="indeterminate"></a>
+                        </span>
+                    </label>
+                    <button class="btn btn-large" style="width: 100%; text-align:center;" onclick="generateStickers('111111', '2222', '3333', '44444', '5');">Save &amp; Print All Stickers</button>
+                </div>
+                <div class="col s12 m6 l6">
+                    <label class="active" for="fld_destinationAccount">
+                        <span class="progress" id="consigneeLoading">
+                            <a class="indeterminate"></a>
+                        </span>
+                    </label>
+                    <button class="btn btn-large" style="width: 100%; text-align:center;" onclick="generateStickers('111111', '2222', '3333', '44444', '5');">Save &amp; Print New Stickers</button>
                 </div>
                
             </div>
         </div>
-        <div class="modal-footer">
-            <a class="modal-action modal-close waves-effect waves-green btn-flat" onclick="window.print();">Save &amp; Print New Stickers</a>
-            <a class="modal-action modal-close waves-effect waves-green btn-flat" onclick="window.print();">Save &amp; Print All Stickers</a>
-        </div>
+
     </div>
 </div>
 
 <div id="newmodalcont">
-   
     <!-- Modal Structure -->
-    <div id="newmodal" class="modal">
+    <div id="newmodal" class="modal" style="max-height: 100%;">
         <div class="modal-content">
-            <h4>New Waybill</h4>
-            <h4>Tracking No. <i id="trackingno"></i></h4>
-            <div class="row">
-                <div class="input-field col s6">
-                    <input value="Head Office" id="first_name2" type="text" class="validate" disabled>
-                    <label class="active" for="first_name2">Origin</label>
-                </div>
-                <div class="input-field col s6">
-                    <select id="destinationList">
-                        <option value="" disabled selected>Choose your option</option>
-                      
-                    </select>
-                    <label class="active" >Destination</label>
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="input-field col s6">
-                    <select id="shipperList">
-                        <option value="" disabled selected>Choose your option</option>
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <label class="active" for="trackingno"  style="font-size: larger;">Tracking No.</label>
+                        <input value="" id="trackingno" type="text" class="validate"  style="font-size: larger;" disabled>
+                        
+                    </div>
+                    <div class="col s12 m6 l6">
+                        <label class="active" for="trackingno" style="font-size: larger;">Route:</label>
+                        <input value="" id="route_label" type="text" class="validate" style="font-size: larger;" disabled>
 
-                    </select>
-                    <label class="active" for="first_name2">Shipper:</label>
+                    </div>
                 </div>
-                <div class="input-field col s6">
-                    <select id="consigneeList">
-                        <option value="" disabled selected>Choose your option</option>
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <label class="active" for="fld_origin">Origin Branch</label>
+                        <input type="text" class="autocomplete" id="fld_origin_vw" onkeyup="filterThisTo(this, 'originBranchList');" disabled>
+                        <input type="hidden"  id="fld_origin" onchange="filterValueTo(this,'originBranchList')"/>
+                        
+                    </div>
+                    <div class="col s12 m6 l6">
+                        <div class="col s12 m12 l12">
+                            <label class="active" for="fld_originAccount">Shipper</label>
+                        </div>
+                        <div class="col s11 m11 l11">
+                            <input type="text" class="autocomplete" id="fld_originAccount_vw" onkeyup="filterThisTo(this, 'customerOriginList');">
+                            <input type="hidden" id="fld_originAccount" onchange="filterValueTo(this,'customerOriginList')" />
 
-                    </select>
-                    <label class="active" for="first_name2">Consignee</label>
+                        </div>
+                        <div class="col s1 m1 l1">
+                            <a class="btn-floating"><i class="material-icons">add</i></a>
+
+                        </div>
+
+                    </div>
+                    
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s4">
-                    <input value="" id="packages_count" type="text" class="validate">
-                    <label class="active" for="first_name2">No. of Packages</label>
+                <div class="row">
+
+                    <div class="col s12 m6 l6">
+                        <ul class="collection" id="originBranchList" style="display:none;">
+                            
+                        </ul>
+                    </div>
+                    <div class="col s12 m6 l6">
+                        <ul class="collection" id="customerOriginList" style="display:none;">
+                            
+                        </ul>
+                        <label for="textarea1" id="orig_phone">Phone No.: XXXX-XXXXX</label>
+                        <div style="height: 72px; width: 100%; word-wrap:break-word; font-size: smaller;" id="orig_add">
+                            Address
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <label class="active" for="fld_destination">Destination Branch</label>
+                        <input type="text" class="autocomplete" id="fld_destination_vw" onkeyup="filterThisTo(this, 'destinationBranchList');" >
+                        <input type="hidden" id="fld_destination" onchange="filterValueTo(this,'destinationBranchList')" />
+                        
+                    </div>
+                    <div class="col s12 m6 l6">
+                        <div class="col s12 m12 l12">
+                            <label class="active" for="fld_destinationAccount">Consignee</label>
+                        </div>
+                        <div class="col s11 m11 l11">
+                            <input type="text" class="autocomplete" id="fld_destinationAccount_vw" onkeyup="filterThisTo(this, 'customerDestinationList');">
+                            <input type="hidden" id="fld_destinationAccount" onchange="filterValueTo(this,'customerDestinationList')" />
+
+                        </div>
+                        <div class="col s1 m1 l1">
+                            <a class="btn-floating"><i class="material-icons">add</i></a>
+
+                        </div>
+
+                    </div>
+                   
+                </div>
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <ul class="collection" id="destinationBranchList" style="display:none;">
+                            
+                        </ul>
+                    </div>
+                    <div class="col s12 m6 l6">
+                        <ul class="collection" id="customerDestinationList" style="display:none;">
+                            
+                        </ul>
+                        <label for="textarea1" id="dest_phone">Phone No.: XXXX-XXXXX</label>
+                        <div style="height: 72px; width: 100%; word-wrap:break-word; font-size: smaller;" id="dest_add">
+                            Address Here
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <label class="active" for="package_count">No. of Packages</label>
+                        <input value="" id="packages_count" type="text" class="validate">
+                    </div>
+                    <div class="col s12 m6 l6">
+                        <label class="active" for="fld_destinationAccount">
+                            <span class="progress" id="consigneeLoading">
+                                <a class="indeterminate"></a>
+                            </span>
+                        </label>
+                        <button class="btn btn-large" style="width: 100%; text-align:center;" onclick="generateStickers('111111', '2222', '3333', '44444', '5');">Save &amp; Print Stickers</button>
+                    </div>
+                </div>
         </div>
-        <div class="modal-footer">
-            <a class="modal-action modal-close waves-effect waves-green btn-flat" onclick="generateStickers('111111', '2222', '3333', '44444', '5');">Save &amp; Print  Stickers</a>
-        </div>
+        
     </div>
 </div>
 
@@ -163,15 +233,32 @@
     <div id="returnmodal" class="modal">
         <div class="modal-content">
             <div class="row">
-                <div class="input-field col s6">
+                <div class="input-field col s12 m6 l6">
                     <input value="" id="rem_TrackingNo" type="text" class="validate">
-                    <label class="active" for="first_name2">Tracking No.:</label>
+                    <label class="active" for="first_name2">From Tracking No.:</label>
                 </div>
-                <div class="input-field col s6">
-                    <input value="" id="rem_ItemNo" type="text" class="validate">
-                    <label class="active" for="first_name2">Sticker No. (e.g. 1234567-001):</label>
+                <div class="input-field col s12 m6 l6">
+                    <input value="" id="rem_TrackingNo" type="text" class="validate">
+                    <label class="active" for="first_name2">To Tracking No.:</label>
                 </div>
-                
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m6 l6">
+                    <label class="active" for="fld_destinationAccount">
+                        <span class="progress" id="consigneeLoading">
+                            <a class="indeterminate"></a>
+                        </span>
+                    </label>
+                    <button class="btn btn-large" style="width: 100%; text-align:center;" onclick="generateStickers('111111', '2222', '3333', '44444', '5');">Re-print Selected Range</button>
+                </div>
+                <div class="input-field col s12 m6 l6">
+                    <label class="active" for="fld_destinationAccount">
+                        <span class="progress" id="consigneeLoading">
+                            <a class="indeterminate"></a>
+                        </span>
+                    </label>
+                    <button class="btn btn-large" style="width: 100%; text-align:center;" onclick="generateStickers('111111', '2222', '3333', '44444', '5');">Return Selected Range</button>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
@@ -189,22 +276,25 @@
 
 <script type="text/javascript">
     $('.modal').modal();
-    
-    function generateStickers(trackingno, route, from, to, number)
+    loadBranches();
+
+    $(document).ready(function () {
+       
+        
+    });
+    function generateStickers()
     {
         $("#printarea").html("");
-        trackingno = $('#trackingno').html();
+        trackingno = $('#trackingno').val();
         number = $('#packages_count').val()
        // savewaybill(trackingno, $('#origin').val(), $('#destinationList').val(), $('#shipperList').val(), $('#consigneeList').val(), $('#packages_count').val());
 
-        console.log($('#destinationList'));
-        var destinaton = $("#destinationList option:selected").text();
-        var shipper = $("#shipperList option:selected").text();
-        var consignee = $("#consigneeList option:selected").text();
+         var shipper = $("#fld_originAccount_vw").val();
+         var consignee = $("#fld_destinationAccount_vw").val();
 
         for (var i = 1; i <= number; i++)
         {
-            createSticker(trackingno, i, 'Head Office to ' + destinaton, shipper, consignee);
+            createSticker(trackingno, i, $('#route_label').val(), shipper, consignee);
             if (i == number)
             {
                 
@@ -234,26 +324,29 @@
         var tenplate = `<div class="container" style="border: 1px solid black;">
                             <div class="row">
                                 <div class="col s4">
-                                    &nbsp; &nbsp; Jades Cargo Services
-                                    <div id="qrcode`+ itemno+`" style="width: 100px; height: 200px; padding: 10px; width: 800px;"></div>
+                                    <br/>
+                                    &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  Jades Cargo Services
+                                    <br/>
+                                     &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ( <u>`+ route +`</u>)
+                                    <div id="qrcode`+ itemno +`" style="width: 100px; height: 200px; padding: 10px; width: 800px;"></div>
+                                    <br/>
+                                    &nbsp; &nbsp; <u>`+ trackingno + ` - ` + pad(itemno, 5) +`</u>
                                 </div>
                                 <div class="col s8" style="font-size: 20px; padding-top: 15px;">
-                                    Tracking No:
-                                    <br />
-                                    <u>`+ trackingno + ` - ` + pad(itemno, 5)+`</u>
-                                    <br />
-                                    Route :
-                                    <br />
-                                    <u>`+ route +`</u>
-                                    <br />
+                                        <div style='border-bottom: 1px solid black; width:100%; margin-right: 10px;'>Van No.: </div>
+                                    <br/>
+                                    <br/>
                                     To:
                                     <br />
-                                    <u>`+ to +`</u>
-                                    <br />
+                                    <div style='border-bottom: 1px solid black; width:100%; margin-right: 10px;'>`+ to +`</div>
+                                    <div style='border-bottom: 1px solid black; width:100%; margin-right: 10px;'>`+ $('#dest_add').html() + `</div>
+                                    <div style='border-bottom: 1px solid black; width:100%; margin-right: 10px;'>`+ $('#dest_phone').html() +`</div>
+                                     <br />
                                     From:
-                                    <br /> <u>`+ from +`</u>
-                                    <br />
-
+                                    <div style='border-bottom: 1px solid black; width:100%; margin-right: 10px;'>`+ from +`</div>
+                                    <div style='border-bottom: 1px solid black; width:100%; margin-right: 10px;'>`+ $('#orig_add').html() +`</div>
+                                    <div style='border-bottom: 1px solid black; width:100%; margin-right: 10px;'>`+ $('#orig_phone').html() +`</div>
+                                     <br />
                                 </div>
                             </div>
                         </div>`;
@@ -274,12 +367,113 @@
     function createWayBill()
     {
         var trackingno = pad(randomNumber(), 8);
-       
-        $('#trackingno').html(trackingno);
+        
+        $('#trackingno').val(trackingno);
         $('#newmodal').modal('open');
+
+        
     }
+    
     function signout()
     {
         modLoad('main', "Account/login.html");
     }
+
+
+   
+    
+    function loadBranches() {
+        $('#originBranchList').html("");
+        $('#destinationBranchList').html("");
+        OffDB.getAll(sDBName, "branches", function (content) {
+            $.each(content, function (key, value) {
+                $('#originBranchList').html($('#originBranchList').html() + `<li class="collection-item" searchkeys="` + value.branchshortcode + ` ` + value.branchname.toUpperCase() + `" onclick="displayBranchname('fld_origin',this)"  data-value="` + value.branchid + `">` + value.branchname + `</li>`);
+
+                if (value.branchid != getUserBranch())
+                {
+                    $('#destinationBranchList').html($('#destinationBranchList').html() + `<li class="collection-item" searchkeys="` + value.branchshortcode + ` ` + value.branchname.toUpperCase() + `" onclick="displayBranchname('fld_destination',this)"  data-value="` + value.branchid + `">` + value.branchname + `</li>`);
+                }
+                
+            });
+            $('#fld_origin').val(getUserBranch());
+            OffDB.getById(sDBName, "branches", getUserBranch(), function (content) {
+
+                $('#route_label').val(content.branchshortcode + " - ");
+            });
+            $('#fld_origin').change();
+            $('#customerOriginList').html("");
+
+            OffDB.getAll(sDBName, "customerOrigAccounts", function (content) {
+                console.log(content);
+                $.each(content, function (key, val) {
+                    
+                    $('#customerOriginList').html($('#customerOriginList').html() + `<li class="collection-item" searchkeys="` + val.customerLastname + ` ` + val.customerFirstname + ` ` + val.customerAccountNo + `" onclick="displayOriginAccountName('fld_originAccount',this)" data-value="` + val.customerAccountNo + `">` + val.customerLastname + `, ` + val.customerFirstname + `</li>`);
+
+                });
+
+
+            });
+        });
+        
+    }
+
+
+    function displayBranchname(id, element)
+    {
+        var value = $(element).attr("data-value");
+        $('#' + id).val(value);
+        $(element).parent().hide();
+        $('#customerDestinationList').html("");
+        $('#fld_destinationAccount').val("");
+        $('#fld_destinationAccount_vw').val("");
+        
+        OffDB.getAll(sDBName, "customerDestinationAccounts", function (content) {
+            $.each(content, function (key, val) {
+                if (val.customerBranch == value) {
+                    $('#customerDestinationList').html($('#customerDestinationList').html() + `<li class="collection-item" searchkeys="` + val.customerLastname + ` ` + val.customerFirstname + ` ` + val.customerAccountNo + `" onclick="displayDestinationAccountName('fld_destinationAccount',this)" data-value="` + val.customerAccountNo + `">` + val.customerLastname + `, ` + val.customerFirstname + `</li>`);
+                }
+            });
+           
+           
+        });
+        OffDB.getById(sDBName, "branches", value, function (content) {
+            var res = $('#route_label').val().split("-");
+
+            $('#route_label').val(res[0].trim() + "-"+ content.branchshortcode );
+        });
+        $('#' + id).change();
+        
+    }
+
+    function displayOriginAccountName(id, element) {
+        var value = $(element).attr("data-value");
+        $('#' + id).val($(element).attr("data-value"));
+        $(element).parent().hide();
+        $('#' + id).change();
+
+        OffDB.getById(sDBName, "customerOrigAccounts", value, function (content) {
+            $('#orig_phone').html(content.customerPhone);
+            $('#orig_add').html(content.customerAddress);
+        
+        });
+        
+    }
+
+    function displayDestinationAccountName(id, element) {
+        var value = $(element).attr("data-value");
+        $('#' + id).val($(element).attr("data-value"));
+        $(element).parent().hide();
+
+        OffDB.getById(sDBName, "customerDestinationAccounts", value, function (content) {
+            $('#dest_phone').html(content.customerPhone);
+            $('#dest_add').html(content.customerAddress);
+          
+        });
+        $('#' + id).change();
+        
+    }
+
+
+
+
 </script>
