@@ -1,0 +1,307 @@
+﻿<div id="waybillList">
+   <div class="container">
+       <div class="card">
+           <div class="card-content">
+               <div class="row" style="color: black;">
+                   <input type="text" placeholder="Search (e.g. Names, Dates)" onkeyup="filterToTbl(this,'tbl_waybillList')" />
+               </div>
+               <div class="row">
+                   <table id="tbl_waybillList">
+                       <thead>
+                           <tr>
+                               <th>
+                                   Date
+                               </th>
+                               <th>
+                                   Route
+                               </th>
+                               <th>
+                                   Tracking No.
+                               </th>
+                               <th>
+                                   Waybill No.
+                               </th>
+                               <th>
+                                   Shipper
+                               </th>
+                               <th>
+                                   Consignee
+                               </th>
+                           </tr>
+                       </thead>
+                       <tbody>
+                           <tr searchkeys="abc hgj">
+                               <td>
+                                   Date
+                               </td>
+                               <td>
+                                   Route
+                               </td>
+                               <td>
+                                   Tracking No.
+                               </td>
+                               <td>
+                                   Waybill No.
+                               </td>
+                               <td>
+                                   Shipper
+                               </td>
+                               <td>
+                                   Consignee
+                               </td>
+                           </tr>
+
+                       </tbody>
+                   </table>
+               </div>
+           </div>
+       </div>
+       
+   </div>
+</div>
+
+
+<div id="waybillForm" >
+    <div class="container">
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text" style="font-size: smaller; color: white;">
+                <div class="row">
+                    <div class="col s12 m4 l4">
+                       
+                            <label style="color:white;">Tracking No.: </label>
+                            <input class="materialize" type="text"  disabled>
+                     
+                    </div>
+                    <div class="col s12 m2 l2">
+                        <label style="color:white;">Date: </label>
+                        <input class="materialize" data-toggle="datepicker">
+                    </div>
+                    <div class="col s12 m2 l2">
+                       
+                            <label style="color:white;">Route: </label>
+                            <input class="materialize" type="text" disabled>
+                           
+                       
+                    </div>
+                    <div class="col s12 m2 l2">
+                        <label style="color:white;">Pickup Date: </label>
+                        <input class="materialize" data-toggle="datepicker">
+                    </div>
+                    <div class="col s12 m2 l2">
+                        <label style="color:white;">Delivered Date: </label>
+                        <input class="materialize" data-toggle="datepicker">
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col s12 m4 l4">
+                        <label for="trackingno" style="color: white;">Waybill No.</label>
+                            <input id="trackingno" type="text" class="validate">
+                           
+                    </div>
+                    <div class="col s12 m4 l4">
+                            <label for="trackingno" style="color: white;">PR No.</label>
+                            <input id="trackingno" type="text" class="validate">
+                           
+                    </div>
+                    <div class="col s12 m4 l4">
+                        <u>Rates: </u><br/>
+                        &nbsp;Volume: <br/>
+                        &nbsp;Weight: <br />
+                        &nbsp;Value: <br />
+                        &nbsp;Minimum: <br />
+
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        Shipper: 
+                        <br/><strong><u>Nathaniel Degorio</u></strong>
+                        <div>
+                            Phone: <br/>
+                            Address: North East, Somehwere Street, New York, Davao City
+                        </div>
+                    </div>
+                    <div class="col s12 m6 l6">
+                        Consignee: <br /><strong><u>Nathaniel Degorio 2</u></strong>
+                        <div>
+                            Phone: 999-9999<br />
+                            Address: North East, Somehwere Street, New York, Davao City
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m3 l3">
+                        Pickup Charge: 
+                        <div class="input-field inline">
+                            <input id="email" type="number" class="validate" placeholder="0.00" style="width: 90px; text-align: right;">
+                        </div>
+                    </div>
+                    <div class="col s12 m3 l3">
+                        Delivery Charge:
+                        <div class="input-field inline">
+                            <input id="email" type="number" class="validate" placeholder="0.00" style="width: 90px; text-align: right;">
+                        </div>
+                    </div>
+                    <div class="col s12 m3 l3">
+                        Weight Charge:
+                        <div class="input-field inline">
+                            <input id="email" type="number" class="validate" placeholder="0.00" style="width: 90px; text-align: right;">
+                        </div>
+                    </div>
+                    <div class="col s12 m3 l3">
+                        Volume Charge:
+                        <div class="input-field inline">
+                            <input id="email" type="number" class="validate" placeholder="0.00" style="width: 90px; text-align: right;">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m3 l3">
+                        Value Charge:
+                        <div class="input-field inline">
+                            <input id="email" type="number" class="validate" placeholder="0.00" style="width: 90px; text-align: right;">
+                        </div>
+                    </div>
+                    <div class="col s12 m3 l3">
+                        Adjustment
+                        <div class="input-field inline">
+                            <input id="email" type="number" class="validate" placeholder="0.00" style="width: 90px; text-align: right;">
+                        </div>
+                    </div>
+                    <div class="col s12 m3 l3">
+                        Discount:
+                        <div class="input-field inline">
+                            <input id="email" type="number" class="validate" placeholder="0.00" style="width: 90px; text-align: right;">
+                        </div>
+                    </div>
+                    <div class="col s12 m3 l3">
+                        Flat Rate Charge:
+                        <div class="input-field inline">
+                            <input id="email" type="number" class="validate" placeholder="0.00" style="width: 90px; text-align: right;">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                </div>
+                <div class="row" style="background-color:white; color: black;">
+                    <div class="s12 m12 l12">
+                        <table class="highlight" style="font-size:smaller;" cellpadding="1">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="new badge left" style="margin:0" data-badge-caption="New"></span>
+                                    </th>
+                                    <th>
+                                        Item Range
+                                    </th>
+                                    <th>
+                                        Unit
+                                    </th>
+                                    <th>
+                                        Description
+                                    </th>
+                                    <th>
+                                        Weight
+                                    </th>
+                                    <th>
+                                        Length
+                                    </th>
+                                    <th>
+                                        Width
+                                    </th>
+                                    <th>
+                                        Height
+                                    </th>
+                                    <th>
+                                        Vol
+                                    </th>
+                                    <th>
+                                        Value
+                                    </th>
+                                    <th>
+                                        Flat Rate
+                                    </th>
+                                    <th>
+                                        Charges
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span class="new badge left" style="margin:0" data-badge-caption="Edit"></span>
+                                    </td>
+                                    <td>
+                                        00001-10000
+                                    </td>
+                                    <td>
+                                        Barrels
+                                    </td>
+                                    <td>
+                                        Boxes in Barrels
+                                    </td>
+                                    <td>
+                                        15
+                                    </td>
+                                    <td>
+                                        75
+                                    </td>
+                                    <td>
+                                        75
+                                    </td>
+                                    <td>
+                                        150
+                                    </td>
+                                    <td>
+                                        0.42
+                                    </td>
+                                    <td>
+                                        2000
+                                    </td>
+                                    <td>
+                                        2000
+                                    </td>
+                                    <td>
+                                        2000
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card-action">
+
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="datepicker"]').datepicker();
+    });
+
+    function filterToTbl(element, dataid)
+    {
+
+        var searchkey = $(element).val().toUpperCase().split();
+
+        $.each($('#' + dataid + ' tbody').find('tr'), function (key, val) {
+            var searchkeys = $(val).attr("searchkeys").toUpperCase()
+           
+            if (searchkeys.indexOf(searchkey)>-1)
+            {
+                $(val).show();
+            } else
+            {
+                $(val).hide();
+            }
+        });
+    }
+
+</script>

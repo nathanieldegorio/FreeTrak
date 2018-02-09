@@ -9,7 +9,7 @@
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
-
+    <link href="Libraries/datepicker/datepicker.min.css" rel="stylesheet" />
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -85,7 +85,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <script src="../../Libraries/qrjs/qrcode.min.js"></script>
     <script src="Libraries/qrjs/instascan.min.js"></script>
-
+    <script src="Libraries/datepicker/datepicker.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $(".button-collapse").sideNav();
@@ -97,9 +97,13 @@
             } else
             {
                 var user = OffDB.getById(sDBName, "userAccounts", localuser, function (content) {
-                            if (content.UserDesignation === "1") {
-                                modLoad("main", "Station/station.html");
-                            }
+                    if (content.UserDesignation === "1") {
+                        modLoad("main", "Station/station.html");
+                    } else
+                        if (content.UserDesignation === "2") {
+                            modLoad("main", "transactions/encoding.html");
+
+                    }
                             localStorage.setItem("user", localuser);
                             localStorage.setItem("userbranch", content.userBranch);
                             localStorage.setItem("userlevel", content.UserDesignation);
@@ -163,22 +167,26 @@
         {
             if (header === undefined)
             {
-                header = "Alert";
-            }
-
-            var alertHtml = `<div id="alertModal" class="modal">
+               // header = "Alert";
+                Materialize.toast(content, 10000);
+            } else
+            {
+                var alertHtml = `<div id="alertModal" class="modal">
                                 <div class="modal-content">
-                                    <h4>`+header+`</h4>
-                                    <p>`+content+`</p>
+                                    <h4>`+ header + `</h4>
+                                    <p>`+ content + `</p>
                                 </div>
                                 <div class="modal-footer">
                                     <a class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
                                 </div>
                             </div>`;
 
-            $('#preprocess').html(alertHtml);
-            $('#alertModal').modal();
-            $('#alertModal').modal('open');            
+                $('#preprocess').html(alertHtml);
+                $('#alertModal').modal();
+                $('#alertModal').modal('open');   
+            }
+
+                     
         }
         function modLoad( id, url, callback, params)
         {
