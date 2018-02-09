@@ -205,6 +205,8 @@
             let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
             scanner.addListener('scan', function (content) {
                 callback(content);
+                $('#qrscanmodal').modal();
+                $('#qrscanmodal').modal('close');
             });
             scanner.addListener('abort', function (content) {
                // console.log(content);
@@ -311,6 +313,29 @@
                     callback(event.target.result);
                 };
                 
+                tx.oncomplete = function () {
+                    db.close();
+                };
+
+
+            };
+        };
+
+        OffDB.remove = function (DBName, tableName, id) {
+            var dbGlobal = indexedDB.open(DBName, 1);
+            var db;
+            dbGlobal.onsuccess = function (event) {
+                db = event.target.result;
+
+                var tx = db.transaction(tableName, "readwrite");
+                var store = tx.objectStore(tableName);
+
+                var items = store.delete(id);
+
+                items.onsuccess = function (event) {
+                    alert("Successfully removed");
+                };
+
                 tx.oncomplete = function () {
                     db.close();
                 };

@@ -16,7 +16,7 @@
                                   
                                 </div>
                                 <div class="col l4 m12 s12" style="padding-bottom: 10px;">
-                                    <a class="waves-effect waves-light btn modal-trigger btn-large col s12" onclick="$('#editmodal').modal('open');">Find Waybill</a>
+                                    <a class="waves-effect waves-light btn modal-trigger btn-large col s12" onclick="editWayBill()">Find Waybill</a>
                                    
                                 </div>
                                 <div class="col l4 m12 s12" style="padding-bottom: 10px;">
@@ -40,85 +40,26 @@
             </div>
 
 
-<div id="editmodalcont">
-    <!-- Modal Structure -->
-    <div id="editmodal" class="modal">
-        <div class="modal-content">
-            <div class="row">
-                <div class="col s12 m6 l6">
-                    <label class="active" for="edt_trackingno" style="font-size: larger;">Tracking No.</label>
-                    <input value="" id="edt_trackingno" type="text" class="validate" style="font-size: larger;" disabled>
-
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12 m6 l6">
-                    <label class="active" for="fld_origin">Origin Branch</label>
-                    <input value="" id="Origin" type="text" class="validate userBranch">
-
-                </div>
-                <div class="col s12 m6 l6">
-                    <label class="active" for="efld_originAccounts">Shipper</label>
-                    <input value="" id="efld_originAccount" type="text" class="validate">
-
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="col s12 m6 l6">
-                    <label class="active" for="efld_destination">Destination Branch</label>
-                    <input value="" id="efld_destination" type="text" class="validate">
-
-                </div>
-                <div class="col s12 m6 l6">
-                    <label class="active" for="efld_destinationAccount">Consignee</label>
-                    <input value="" id="efld_destination" type="text" class="validate">
-
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12 m6 l6">
-                    <label class="active" for="package_count">No. of Packages</label>
-                    <input value="" id="package_count" type="text" class="validate">
-                </div>
-                <div class="col s12 m6 l6">
-                    <label class="active" for="package_count">No. additional of Packages</label>
-                    <input value="" id="package_count_new" type="text" class="validate">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12 m6 l6">
-                    <label class="active" for="fld_destinationAccount">
-                        <span class="progress" id="consigneeLoading">
-                            <a class="indeterminate"></a>
-                        </span>
-                    </label>
-                    <button class="btn btn-large" style="width: 100%; text-align:center;" onclick="generateStickers('111111', '2222', '3333', '44444', '5');">Save &amp; Print All Stickers</button>
-                </div>
-                <div class="col s12 m6 l6">
-                    <label class="active" for="fld_destinationAccount">
-                        <span class="progress" id="consigneeLoading">
-                            <a class="indeterminate"></a>
-                        </span>
-                    </label>
-                    <button class="btn btn-large" style="width: 100%; text-align:center;" onclick="generateStickers('111111', '2222', '3333', '44444', '5');">Save &amp; Print New Stickers</button>
-                </div>
-               
-            </div>
-        </div>
-
-    </div>
-</div>
-
 <div id="newmodalcont">
     <!-- Modal Structure -->
     <div id="newmodal" class="modal" style="max-height: 100%;">
         <div class="modal-content">
                 <div class="row">
                     <div class="col s12 m6 l6">
-                        <label class="active" for="trackingno"  style="font-size: larger;">Tracking No.</label>
-                        <input value="" id="trackingno" type="text" class="validate"  style="font-size: larger;" disabled>
-                        
+                            <div class="col s8 m8 l8">
+                                <label class="active" for="trackingno" style="font-size: larger;">Tracking No.</label>
+                                <input value="" id="trackingno" type="text" class="validate" style="font-size: larger;" disabled>
+                            </div>
+                            <div class="col s4 m4 l4 editwaybill" style="display: none;">
+                                <label class="active col s12 m12 l12" for="trackingno" style="font-size: larger;">&nbsp;</label>
+                                <button class="btn waves-effect waves-light col s12 m6 l6" type="button" name="action" onclick=" loadwaybill($('#trackingno').val());">
+                                    <i class="material-icons right">search</i>
+                                </button>
+                                <button class="btn waves-effect waves-light col s12 m6 l6" type="button" name="action" onclick=" scantrackingno()">
+                                    <i class="material-icons right">business</i>
+                                </button>
+
+                            </div>
                     </div>
                     <div class="col s12 m6 l6">
                         <label class="active" for="trackingno" style="font-size: larger;">Route:</label>
@@ -208,7 +149,7 @@
                     </div>
 
                 </div>
-                <div class="row">
+                <div class="row newwaybill ">
                     <div class="col s12 m6 l6">
                         <label class="active" for="package_count">No. of Packages</label>
                         <input value="" id="packages_count" type="text" class="validate">
@@ -219,9 +160,28 @@
                                 <a class="indeterminate"></a>
                             </span>
                         </label>
-                        <button class="btn btn-large" style="width: 100%; text-align:center;" onclick="generateStickers('111111', '2222', '3333', '44444', '5');">Save &amp; Print Stickers</button>
+                        <button class="btn btn-large" style="width: 100%; text-align:center;" onclick="generateStickers();">Save &amp; Print Stickers</button>
                     </div>
                 </div>
+            <div class="row editwaybill">
+                <div class="col s12 m6 l6">
+                    <label class="active" for="last_item_no">Last Item No.</label>
+                    <input value="" id="last_item_no" type="text" class="validate" disabled>
+                </div>
+                <div class="col s12 m6 l6">
+                    <label class="active" for="add_stickers">No. of Stickers to Add</label>
+                    <input value="0" id="add_stickers" type="text" class="validate" >
+                </div>
+                <div class="col s12 m6 l6">
+                    
+                    <button class="btn btn-large" style="width: 100%; text-align:center;" onclick="$('#packages_count').val(parseInt($('#last_item_no').val())+ parseInt($('#add_stickers').val())); generateStickersRangeFromDB();">Save &amp; Print All Stickers</button>
+                </div>
+                <div class="col s12 m6 l6">
+                   
+                    <button class="btn btn-large" style="width: 100%; text-align:center;" onclick="$('#packages_count').val(parseInt($('#last_item_no').val())+ parseInt($('#add_stickers').val())); generateStickersRange( parseInt($('#last_item_no').val())+1,  parseInt($('#last_item_no').val())+ parseInt($('#add_stickers').val()));">Save &amp; Print Only New Stickers</button>
+                </div>
+
+            </div>
         </div>
         
     </div>
@@ -234,11 +194,11 @@
         <div class="modal-content">
             <div class="row">
                 <div class="input-field col s12 m6 l6">
-                    <input value="" id="rem_TrackingNo" type="text" class="validate">
+                    <input value="" id="rangefrom_TrackingNo" type="text" class="validate">
                     <label class="active" for="first_name2">From Tracking No.:</label>
                 </div>
                 <div class="input-field col s12 m6 l6">
-                    <input value="" id="rem_TrackingNo" type="text" class="validate">
+                    <input value="" id="rangeto_TrackingNo" type="text" class="validate">
                     <label class="active" for="first_name2">To Tracking No.:</label>
                 </div>
             </div>
@@ -249,7 +209,7 @@
                             <a class="indeterminate"></a>
                         </span>
                     </label>
-                    <button class="btn btn-large" style="width: 100%; text-align:center;" onclick="generateStickers('111111', '2222', '3333', '44444', '5');">Re-print Selected Range</button>
+                    <button class="btn btn-large" style="width: 100%; text-align:center;" onclick="generateStickersRangeFromInput($('#rangefrom_TrackingNo').val(), $('#rangeto_TrackingNo').val());">Re-print Selected Range</button>
                 </div>
                 <div class="input-field col s12 m6 l6">
                     <label class="active" for="fld_destinationAccount">
@@ -257,13 +217,11 @@
                             <a class="indeterminate"></a>
                         </span>
                     </label>
-                    <button class="btn btn-large" style="width: 100%; text-align:center;" onclick="generateStickers('111111', '2222', '3333', '44444', '5');">Return Selected Range</button>
+                    <button class="btn btn-large" style="width: 100%; text-align:center;" onclick=" removeStickersRangeFromInput($('#rangefrom_TrackingNo').val(), $('#rangeto_TrackingNo').val());">Return Selected Range</button>
                 </div>
             </div>
         </div>
-        <div class="modal-footer">
-            <a class="modal-action modal-close waves-effect waves-green btn-flat" onclick="removeItem($('#rem_TrackingNo').val(),$('#rem_ItemNo').val() )">Return Stickers</a>
-        </div>
+        
     </div>
 </div>
 
@@ -287,8 +245,7 @@
         $("#printarea").html("");
         trackingno = $('#trackingno').val();
         number = $('#packages_count').val()
-       // savewaybill(trackingno, $('#origin').val(), $('#destinationList').val(), $('#shipperList').val(), $('#consigneeList').val(), $('#packages_count').val());
-
+        savewaybill();
          var shipper = $("#fld_originAccount_vw").val();
          var consignee = $("#fld_destinationAccount_vw").val();
 
@@ -319,8 +276,192 @@
             });
         }
     }
+
+    function generateStickersRange(starting, ending) {
+        $("#printarea").html("");
+        trackingno = $('#trackingno').val();
+        savewaybill();
+        var shipper = $("#fld_originAccount_vw").val();
+        var consignee = $("#fld_destinationAccount_vw").val();
+
+        for (var i = starting; i <= ending; i++) {
+            createSticker(trackingno, i, $('#route_label').val(), shipper, consignee);
+            if (i == ending) {
+
+                printStickersRange(trackingno, starting, ending);
+
+            }
+        }
+
+        window.print();
+    }
+
+    function printStickersRange(trackingno, starting, ending) {
+        for (var i = starting; i <= ending; i++) {
+            //    insertItem(trackingno, i);
+            var qrcode = new QRCode("qrcode" + i, {
+                text: trackingno + "-" + pad(i, 5),
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+    }
+    
+    function generateStickersRangeFromDB(id) {
+        $("#printarea").html("");
+        id = $('#trackingno').val();
+        trackingno = $('#trackingno').val();
+        savewaybill();
+        var shipper = $("#fld_originAccount_vw").val();
+        var consignee = $("#fld_destinationAccount_vw").val();
+        var count = 0;
+        OffDB.getAll(sDBName, "items", function (content) {
+            var cnt = 0;
+            var max = 0;
+            $.each(content, function (key, val) {
+               
+               
+               
+                if (val.Trackingno == id)
+                {
+                    var spl = val.itemNo.split("-");
+                    var valueOf = parseInt(spl[1].trim());
+                    if (valueOf > max)
+                    {
+                        max = valueOf;
+                    }
+                    createSticker(val.Trackingno, valueOf, $('#route_label').val(), shipper, consignee);
+                }
+
+                
+                if (key == content.length - 1)
+                {
+                    if ($('#add_stickers').val() > 0) {
+                        for (var i = max + 1; i < parseInt($('#last_item_no').val()) + parseInt($('#add_stickers').val()) + 1; i++) {
+                            createSticker(val.Trackingno, i, $('#route_label').val(), shipper, consignee);
+                            max = i;
+                        }
+                    }
+
+                    printStickers(val.Trackingno, max)
+                }
+            });
+                
+            
+        }); 
+            
+        
+
+        window.print();
+    }
+
+    function generateStickersRangeFromInput(starting, end) {
+        $("#printarea").html("");
+        var spl = starting.split("-");
+        var epl = end.split("-");
+        var trno = spl[0].trim()
+        var start = parseInt(spl[1].trim());
+        var end = parseInt(epl[1].trim());
+        var fromRt = "";
+     
+
+        OffDB.getAll(sDBName, "items", function (content_items) {
+            var lbl = $('#route_label').val().split("-");
+            var cnt = 0;
+            var max = 0;
+            var route = "";
+            lbl = lbl[0];
+            var fromRt; 
+            var toRt;
+            var shp;
+            var cne;
+            
+
+            OffDB.getById(sDBName, "waybills", trno, function (result) {
+                OffDB.getById(sDBName, "branches", getUserBranch(), function (content) {
+                    fromRt = content.branchshortcode;
+                    OffDB.getById(sDBName, "branches", result.destination, function (content) {
+                        toRt = content.branchshortcode;
+                        OffDB.getById(sDBName, "customerOrigAccounts", result.shipper, function (content) {
+                            $('#orig_add').html(content.customerAddress);
+                            $('#orig_phone').html(content.customerPhone);
+                            shp = content.customerLastname + ', ' + content.customerFirstname;
+                            OffDB.getById(sDBName, "customerDestinationAccounts", result.consignee, function (content) {
+                               
+                                $('#dest_add').html(content.customerAddress);
+                                $('#dest_phone').html(content.customerPhone);
+                                cne = content.customerLastname + ', ' + content.customerFirstname;
+
+                                $.each(content_items, function (key, val) {
+                                    if (val.Trackingno == trno) {
+                                        var spl = val.itemNo.split("-");
+                                        var valueOf = parseInt(spl[1].trim());
+                                        if (valueOf >= start && valueOf <= end) {
+                                            createSticker(val.Trackingno, valueOf, fromRt + ' - ' + toRt, shp, cne);
+                                        }
+
+                                        if (key == content_items.length - 1) {
+                                            printStickers(trno, end);
+                                        }
+                                    }
+
+
+
+
+
+
+                                });
+
+                            });
+                        });
+
+                    });
+
+
+                });
+            });
+            
+            
+
+
+        });
+
+
+
+        window.print();
+    }
+
+    function removeStickersRangeFromInput(starting, end) {
+        var spl = starting.split("-");
+        var epl = end.split("-");
+        var trno = spl[0].trim()
+        var start = parseInt(spl[1].trim());
+        var end = parseInt(epl[1].trim());
+        var fromRt = "";
+        OffDB.getAll(sDBName, "items", function (content_items) {
+            
+
+            $.each(content_items, function (key, val) {
+                var spls = val.itemNo.split("-");
+                var valueOf = parseInt(spls[1].trim());
+                if (valueOf >= start && valueOf <= end) {
+                    OffDB.remove(sDBName, "items", val.itemNo);
+                }
+            });
+            
+
+           
+        });
+    }
+
+
     function createSticker(trackingno, itemno, route, from, to)
     {
+
+        saveitem(trackingno + `-` + pad(itemno, 5), trackingno);
         var tenplate = `<div class="container" style="border: 1px solid black;">
                             <div class="row">
                                 <div class="col s4">
@@ -367,13 +508,79 @@
     function createWayBill()
     {
         var trackingno = pad(randomNumber(), 8);
-        
+        $('.newwaybill').show();
+        $('.editwaybill').hide();
         $('#trackingno').val(trackingno);
+        $('#trackingno').attr("disabled");
         $('#newmodal').modal('open');
 
         
     }
-    
+
+    function editWayBill() {
+        var trackingno = pad(randomNumber(), 8);
+
+        $('.newwaybill').hide();
+        $('.editwaybill').show();
+        $('#trackingno').val();
+        $('#trackingno').removeAttr("disabled");
+        $('#newmodal').modal('open');
+
+    }
+
+    function scantrackingno()
+    {
+        qrscan(function (content) {
+            var spl = content.split("-");
+            loadwaybill(spl[0]);
+            
+            
+        });
+    }
+
+    function loadwaybill(trackingno)
+    {
+        OffDB.getById(sDBName, "waybills", trackingno, function (content) {
+
+            if (content == undefined)
+            {
+                alert("Waybill not found");
+
+            } else
+            {
+
+                $('#trackingno').val(trackingno);
+
+                OffDB.getById(sDBName, "branches", content.destination, function (content) {
+
+                    var res = $('#route_label').val().split("-");
+
+                    $('#route_label').val(res[0].trim() + "-" + content.branchshortcode);
+                });
+                $('#fld_destination').val(content.destination);
+                $('#fld_destination').change();
+                $('#customerOriginList').html("");
+                $('#last_item_no').val(content.lastitemindex);
+                $('#customerOriginList').html("");
+
+                OffDB.getById(sDBName, "customerOrigAccounts", content.shipper, function (val) {
+                    $('#fld_originAccount_vw').val(val.customerLastname + ', ' + val.customerFirstname);
+                    $('#fld_originAccount').val(val.customerAccountNo);
+                    $('#orig_add').html(val.customerAddress);
+                    $('#orig_phone').html(val.customerPhone);
+                });
+
+                OffDB.getById(sDBName, "customerDestinationAccounts", content.consignee, function (val) {
+                    $('#fld_destinationAccount_vw').val(val.customerLastname + ', ' + val.customerFirstname);
+                    $('#fld_destinationAccount').val(val.customerAccountNo);
+                    $('#dest_add').html(val.customerAddress);
+                    $('#dest_phone').html(val.customerPhone);
+                });
+
+            }
+        });
+    }
+
     function signout()
     {
         modLoad('main', "Account/login.html");
@@ -404,7 +611,6 @@
             $('#customerOriginList').html("");
 
             OffDB.getAll(sDBName, "customerOrigAccounts", function (content) {
-                console.log(content);
                 $.each(content, function (key, val) {
                     
                     $('#customerOriginList').html($('#customerOriginList').html() + `<li class="collection-item" searchkeys="` + val.customerLastname + ` ` + val.customerFirstname + ` ` + val.customerAccountNo + `" onclick="displayOriginAccountName('fld_originAccount',this)" data-value="` + val.customerAccountNo + `">` + val.customerLastname + `, ` + val.customerFirstname + `</li>`);
@@ -473,7 +679,80 @@
         
     }
 
+    function savewaybill()
+    {
+        var waybills = new Array();
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
 
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        var today = dd + '/' + mm + '/' + yyyy;
 
+        var waybill = {
+            trackingno: $('#trackingno').val(),
+            waybillno: '',
+            prno: '',
+            date: today,
+            pickupdate: '',
+            delivereddate: '',
+            shipper: $('#fld_originAccount').val(),
+            consignee: $('#fld_destinationAccount').val(),
+            origin: $('#fld_origin').val(),
+            destination: $('#fld_destination').val(),
+            paymenttype: '1',
+            rate: '1',
+            computeType: '1',
+            pickupcharge: '0.00',
+            weightcharge: '0.00',
+            deliverycharge: '0.00',
+            volumecharge: '0.00',
+            discount: '0.00',
+            valuecharge: '0.00',
+            adjustment: '0.00',
+            flatratecharge: '0.00',
+            EVAT: '0.00',
+            Total: '',
+            DirectVanLoad: '',
+            PreparedBy: '',
+            PickedupBy: '',
+            ReceivedBy: '',
+            CheckedBy: '',
+            lastitemindex:$('#packages_count').val()
+        };
+        waybills.push(waybill);
+
+        OffDB.insert(sDBName, "waybills", waybills);
+    }
+    
+    function saveitem(itemno,trackingno)
+    {
+        
+        var items = new Array();
+        var item = {
+            itemNo: itemno,
+            ItemDescription: '',
+              UnitID: '1',
+              Quantity: '1',
+              Length: '0.00',
+              Width: '0.00',
+               Height: '0.00',
+              Value: '0.00',
+              FlatRate: '0.00',
+              Charge: '0.00',
+              LoadingListNo: '',
+              CurrentStatus: 'New',
+              Trackingno: trackingno
+        };
+        items.push(item);
+        OffDB.insert(sDBName, "items", items);
+
+    }
 
 </script>
