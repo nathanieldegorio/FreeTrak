@@ -56,20 +56,14 @@
         <div class="nav-wrapper teal">
             <div  class="brand-logo hide-on-med-and-down" style="padding-left: 10px; padding-right: 10px; font-size: 16pt;">Jades Cargo Services, Inc.</div>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-            <!--
+            
             <ul class="right hide-on-med-and-down">
-                <li><a href="sass.html">Sass</a></li>
-                <li><a href="badges.html">Components</a></li>
-                <li><a href="collapsible.html">Javascript</a></li>
-                <li><a href="mobile.html">Mobile</a></li>
+                <li><a onclick="signout()">Signout</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="sass.html">Sass</a></li>
-                <li><a href="badges.html">Components</a></li>
-                <li><a href="collapsible.html">Javascript</a></li>
-                <li><a href="mobile.html">Mobile</a></li>
+                <li><a onclick="signout()">Signout</a></li>
             </ul>
-                -->
+               
         </div>
     </nav>
     <br/>
@@ -216,6 +210,9 @@
                          {
                              modLoad("main", "Station/station.html");
                          }
+                         if (content.UserDesignation === "2") {
+                             modLoad("main", "transactions/encoding.html");
+                         }
                          localStorage.setItem("user", username);
                          
                      } else {
@@ -290,6 +287,9 @@
                 dbGl.createObjectStore("vans", { keyPath: "vanno", unique: true });
                 dbGl.createObjectStore("loadinglists", { keyPath: "loadinglistno", unique: true });
                 dbGl.createObjectStore("cargomanifest", { keyPath: "cargomanifestno", unique: true });
+                dbGl.createObjectStore("ItemSummary", { keyPath: "ItemSummaryID", unique: true });
+
+                
 
             };
         };

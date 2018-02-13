@@ -227,7 +227,7 @@
 
 
 
-<div id="printarea" style=" visibility: hidden;">
+<div id="printarea" style=" visibility: hidden; position:absolute; top:0; left:0;">
    
 </div>
 
@@ -268,8 +268,8 @@
         //    insertItem(trackingno, i);
             var qrcode = new QRCode("qrcode" + i, {
                 text: trackingno + "-" + pad(i, 5),
-                width: 200,
-                height: 200,
+                width: 72,
+                height: 72,
                 colorDark: "#000000",
                 colorLight: "#ffffff",
                 correctLevel: QRCode.CorrectLevel.H
@@ -462,31 +462,33 @@
     {
 
         saveitem(trackingno + `-` + pad(itemno, 5), trackingno);
-        var tenplate = `<div class="container" style="border: 1px solid black;">
+        var tenplate = `<div style="">
                             <div class="row">
-                                <div class="col s4">
+                                <div class="col s4" style="font-size: 12px;">
                                     <br/>
-                                    &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  Jades Cargo Services
+                                    &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  Jades Cargo
                                     <br/>
-                                     &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ( <u>`+ route +`</u>)
-                                    <div id="qrcode`+ itemno +`" style="width: 100px; height: 200px; padding: 10px; width: 800px;"></div>
-                                    <br/>
-                                    &nbsp; &nbsp; <u>`+ trackingno + ` - ` + pad(itemno, 5) +`</u>
+                                     ( <u style="font-size: 10px;">`+ route +`</u>)
+                                    
+                                    <div id="qrcode`+ itemno +`" style="margin-top: 1px; margin-bottom: -5px;"></div>
+                                    
+                                    <div  style="font-size: 11 px"> Tracking No.: 
+                                    <u>`+ trackingno + ` </u><br/><br/> Item No.: <br/> <u>` + pad(itemno, 5) +`</u> </div>
                                 </div>
-                                <div class="col s8" style="font-size: 20px; padding-top: 15px;">
+                                <div class="col s8" style="font-size: 10px; padding-top: 15px;">
                                         <div style='border-bottom: 1px solid black; width:100%; margin-right: 10px;'>Van No.: </div>
                                     <br/>
                                     <br/>
                                     To:
                                     <br />
-                                    <div style='border-bottom: 1px solid black; width:100%; margin-right: 10px;'>`+ to +`</div>
-                                    <div style='border-bottom: 1px solid black; width:100%; margin-right: 10px;'>`+ $('#dest_add').html() + `</div>
-                                    <div style='border-bottom: 1px solid black; width:100%; margin-right: 10px;'>`+ $('#dest_phone').html() +`</div>
+                                    <div style='border-bottom: 1px solid black; width:100%;'>`+ to +`</div>
+                                    <div style='border-bottom: 1px solid black; width:100%;'>`+ $('#dest_add').html() + `</div>
+                                    <div style='border-bottom: 1px solid black; width:100%;'>`+ $('#dest_phone').html() +`</div>
                                      <br />
                                     From:
-                                    <div style='border-bottom: 1px solid black; width:100%; margin-right: 10px;'>`+ from +`</div>
-                                    <div style='border-bottom: 1px solid black; width:100%; margin-right: 10px;'>`+ $('#orig_add').html() +`</div>
-                                    <div style='border-bottom: 1px solid black; width:100%; margin-right: 10px;'>`+ $('#orig_phone').html() +`</div>
+                                    <div style='border-bottom: 1px solid black; width:100%;'>`+ from +`</div>
+                                    <div style='border-bottom: 1px solid black; width:100%;'>`+ $('#orig_add').html() +`</div>
+                                    <div style='border-bottom: 1px solid black; width:100%;'>`+ $('#orig_phone').html() +`</div>
                                      <br />
                                 </div>
                             </div>
