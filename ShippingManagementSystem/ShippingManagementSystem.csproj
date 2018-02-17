@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\Repos\**" />
+    <Compile Remove="wwwroot\Scripts\**" />
+    <Content Remove="wwwroot\Repos\**" />
+    <Content Remove="wwwroot\Scripts\**" />
+    <EmbeddedResource Remove="wwwroot\Repos\**" />
+    <EmbeddedResource Remove="wwwroot\Scripts\**" />
+    <None Remove="wwwroot\Repos\**" />
+    <None Remove="wwwroot\Scripts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
@@ -19,10 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="wwwroot\Libraries\qrjs\" />
-    <Folder Include="wwwroot\Repos\" />
-    <Folder Include="wwwroot\Scripts\" />
   </ItemGroup>
 
 </Project>

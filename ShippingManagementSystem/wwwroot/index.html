@@ -1,603 +1,180 @@
 ﻿<!DOCTYPE html>
 <html>
-
-   
-
 <head>
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
-    <link href="Libraries/datepicker/datepicker.min.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <title>Jades Cargo Service, Inc.</title>
+    <link href="/Libraries/semantic/semantic.min.css" rel="stylesheet" />
+    <link href="/Libraries/datepicker/calendar.min.css" rel="stylesheet" />
 
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-        body {
-            background-color: #e0f7fa;
-        }
-        .modal{
-            margin-top: -40px;
-        }
-        @media print {
-            body * {
-                visibility: hidden;
-                background-color: white;
-            }
-
-            #printarea * {
-                visibility: visible;
-               
-            }
-
-            #printarea {
-                position: absolute;
-                top: 40px;
-                left: 30px;
-                height: 100%;
-            }
-        }
-    </style>
-   
 </head>
-
 <body>
-    <div id="preprocess">
+    <div id="main">
 
-    </div>  
-        <div id="qrscanmodal" class="modal">
-            <div class="modal-content">
-                <video id="preview"></video>
+        <div class="ui breadcrumb">
+            
+        </div>
+  
+        <div class="ui uicalendar">
+            <div class="ui mini input left icon">
+                <i class="calendar outline icon"></i>
+                <input type="text" placeholder="Date/Time">
             </div>
         </div>
-   
-    <nav>
-        <div class="nav-wrapper teal">
-            <div  class="brand-logo hide-on-med-and-down" style="padding-left: 10px; padding-right: 10px; font-size: 16pt;">Jades Cargo Services, Inc.</div>
-            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-            
-            <ul class="right hide-on-med-and-down">
-                <li><a onclick="signout()">Signout</a></li>
-            </ul>
-            <ul class="side-nav" id="mobile-demo">
-                <li><a onclick="signout()">Signout</a></li>
-            </ul>
-               
-        </div>
-    </nav>
-    <br/>
 
-    
-    <div id="main">
-       
+
+
     </div>
+    <script src="/Libraries/Jquery/jquery-3.2.1.min.js"></script>
+    <script src="/Libraries/qrjs/instascan.min.js"></script>
+    <script src="/Libraries/semantic/semantic.min.js"></script>
+    <script src="/Libraries/datepicker/calendar.min.js"></script>
+    <script src="/Libraries/qrjs/qrcode.min.js"></script>
+    <!-- utility scripts-->
+    <script>
+        var Utility = [];
 
+        Utility.loadScript = function (url, callback) {
+            jQuery.ajax({
+                url: url,
+                dataType: 'script',
+                success: callback,
+                async: true
+            });
+        }
 
-    <!--Import jQuery before materialize.js-->
-    <script src="Libraries/Jquery/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    <script src="../../Libraries/qrjs/qrcode.min.js"></script>
-    <script src="Libraries/qrjs/instascan.min.js"></script>
-    <script src="Libraries/datepicker/datepicker.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".button-collapse").sideNav();
-
-            var localuser = localStorage.getItem("user");
-            if (localuser == undefined || localuser.trim() == "")
-            {
-                modLoad('main', "Account/login.html");
-            } else
-            {
-                var user = OffDB.getById(sDBName, "userAccounts", localuser, function (content) {
-                    if (content.UserDesignation === "1") {
-                        modLoad("main", "Station/station.html");
-                    } else
-                        if (content.UserDesignation === "2") {
-                            modLoad("main", "transactions/encoding.html");
-
-                    }
-                            localStorage.setItem("user", localuser);
-                            localStorage.setItem("userbranch", content.userBranch);
-                            localStorage.setItem("userlevel", content.UserDesignation);
+        Utility.loadTemplate = function (templateUrl, id, scriptUrl) {
+            jQuery.ajax({
+                url: templateUrl,
+                dataType: 'text',
+                success: function (data) {
                     
-                });
+                    $("#" + id).html("");
+
+                    if (scriptUrl != undefined && scriptUrl.trim() != "")
+                    {
+                        data + `<script> Utility.loadScript('`+scriptUrl+`')<//script>`;
+                    }
+
+                     $("#" + id).html(data);
+
+                },
+                async: true
+            });
+        }
+
+        Utility.loadScalar = function (url, callback) {
+            jQuery.ajax({
+                url: url,
+                dataType: 'script',
+                success: callback,
+                async: true
+            });
+        }
+
+        Utility.loadResults = function (url, callback) {
+            jQuery.ajax({
+                url: url,
+                dataType: 'script',
+                success: callback,
+                async: true
+            });
+        }
+
+        Utility.loadSingleResult = function (url, callback) {
+            jQuery.ajax({
+                url: url,
+                dataType: 'script',
+                success: callback,
+                async: true
+            });
+        }
+
+        Utility.pad = function(n, width, z) {
+            z = z || '0';
+            n = n + '';
+            return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+        }
+
+        Utility.getDate = function (date) {
+            var today = new Date(date);
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            return today = mm + '/' + dd + '/' + yyyy;
+        }
+
+
+        Utility.loadCrumbs = function()
+        {
+            var current = window.location.href;
+            if (current[current.length - 1] == "/")
+            {
+                current = current.substring(0, [current.length - 1]);
             }
             
-            OffDB.initializeDB();
-            OffDB.insert(sDBName, "userDesignations", designations);
-            OffDB.insert(sDBName, "userAccounts", users);
-            OffDB.insert(sDBName, "branches", branches);
-            OffDB.insert(sDBName, "customerOrigAccounts", origCustomers);
-            OffDB.insert(sDBName, "customerDestinationAccounts", destCustomers);
+            var url = current.split("/");
+            $('.breadcrumb').html("")
+            var rebuildUrl = "";
+            $.each(url, function (key, val) {
+                rebuildUrl = rebuildUrl + val + "/";
+                if (key > 1)
+                {
+                    if (key == 2)
+                    {
+                        val = "Home";
+                    }
+                    if (val.trim() != "" && val != undefined)
+                    {
+                        if (key == url.length-1)
+                        {
+                            var template = `<a class="active section">` + val + `</a>`;
 
+                            $('.breadcrumb').html($('.breadcrumb').html() + template)
+                        } else
+                        {
+                            var template = `<a class="section" href="` + rebuildUrl + `">` + val + `</a> <i class="right angle icon divider"></i>`;
+
+                            $('.breadcrumb').html($('.breadcrumb').html() + template)
+                        }
+                        
+
+                    }
+
+                   
+                }
+            });
+        }
+     
+    </script>
+
+    <!-- main script here-->
+    <script>
+        $(document).ready(function () {
+
+            //default declarations
+            $('.uicalendar').calendar({ type: 'date' });
+            Utility.loadCrumbs();
+            Utility.loadTemplate("/Application/main.html", "main");
 
         });
-
-        function filterThisTo(element, dataid)
-        {
-            var searchkey = $(element).val();
-            if (searchkey.length > 2)
-            {
-                $('#' + dataid).show();
-                
-                $('#' + dataid + ' li').each(function (key, value) {
-
-                    var searchkeys = $(value).attr("searchkeys");
-                    if (searchkeys.toUpperCase().indexOf(searchkey.toUpperCase()) > -1)
-                    {
-                        $(value).show();
-                    } else
-                    {
-                        $(value).hide();
-                    }
-
-                });
-
-            } else
-            {
-                $('#' + dataid).hide();
-            }
-            
-
-        }
-
-        function filterValueTo(element, dataid)
-        {
-                $('#' + dataid + ' li').each(function (key, value) {
-                    if ($(value).attr("data-value") == $(element).val())
-                    {
-                        var vwid = $(element)[0].id + "_vw";
-                        $('#' + vwid).val($(value).html());
-                    }
-                });
-         
-        }
-        
-
-
-        function alert(content, header)
-        {
-            if (header === undefined)
-            {
-               // header = "Alert";
-                Materialize.toast(content, 10000);
-            } else
-            {
-                var alertHtml = `<div id="alertModal" class="modal">
-                                <div class="modal-content">
-                                    <h4>`+ header + `</h4>
-                                    <p>`+ content + `</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <a class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
-                                </div>
-                            </div>`;
-
-                $('#preprocess').html(alertHtml);
-                $('#alertModal').modal();
-                $('#alertModal').modal('open');   
-            }
-
-                     
-        }
-        function modLoad( id, url, callback, params)
-        {
-            $.ajax({
-                url: "Views/" + url,
-                data: {},
-                success: function (data) {
-                    $('#' + id).html(data);
-                },
-                dataType: "text"
-            });
-        }
     </script>
-    <script>
-         function qrlogin() {
-             qrscan(function (content) {
-                 var params = content.split("|");
-                 login(params[0], params[1]);
-             });
-        }
-         function login(username, password) {
-             var user = OffDB.getById(sDBName, "userAccounts", username, function (content) {
-                 if (content != undefined)
-                 {
-                     if (password == content.Password) {
-                         if (content.UserDesignation === "1")
-                         {
-                             modLoad("main", "Station/station.html");
-                         }
-                         if (content.UserDesignation === "2") {
-                             modLoad("main", "transactions/encoding.html");
-                         }
-                         localStorage.setItem("user", username);
-                         
-                     } else {
-                         alert("Please check username/password.", "Error on Login");
-                     }
-                 } else
-                 {
-                     alert("Please check username/password.", "Error on Login");
-                 }
-                 
-             });
-         }
-
-         function getUserBranch()
-         {
-             return localStorage.getItem("userbranch");
-         }
-
-
-    </script>
-    <script>
-        
-
-        function qrscan(callback)
-        {
-            let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-            scanner.addListener('scan', function (content) {
-                callback(content);
-                $('#qrscanmodal').modal();
-                $('#qrscanmodal').modal('close');
-            });
-            scanner.addListener('abort', function (content) {
-               // console.log(content);
-            });
-            Instascan.Camera.getCameras().then(function (cameras) {
-                if (cameras.length > 0) {
-                    scanner.start(cameras[0]);
-                } else {
-                    console.error('No cameras found.');
-                }
-            }).catch(function (e) {
-                console.error(e);
-            });
-
-            $('#qrscanmodal').modal();
-            $('#qrscanmodal').modal('open');
-        }
-    </script>
-    <script>
-        //Offline DB Scripts
-        var OffDB = {};
-        var sDBName = "JCSDBOff";
-        
-        OffDB.initializeDB = function () {
-            var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
-
-            // Open (or create) the database
-            var dbGlobal = indexedDB.open(sDBName, 1);
-
-            // Create the schema
-            dbGlobal.onupgradeneeded = function () {
-                dbGl = dbGlobal.result;
-                dbGl.createObjectStore("userDesignations", { keyPath: "userDesignationID", unique: true });
-                dbGl.createObjectStore("userAccounts", { keyPath: "Username", unique: true });
-                dbGl.createObjectStore("branches", { keyPath: "branchid", unique: true });
-                dbGl.createObjectStore("customerOrigAccounts", { keyPath: "customerAccountNo", unique: true });
-                dbGl.createObjectStore("customerDestinationAccounts", { keyPath: "customerAccountNo", unique: true });
-
-                dbGl.createObjectStore("items", { keyPath: "itemNo", unique: true });
-                dbGl.createObjectStore("waybills", { keyPath: "trackingno", unique: true });
-
-                dbGl.createObjectStore("vans", { keyPath: "vanno", unique: true });
-                dbGl.createObjectStore("loadinglists", { keyPath: "loadinglistno", unique: true });
-                dbGl.createObjectStore("cargomanifest", { keyPath: "cargomanifestno", unique: true });
-                dbGl.createObjectStore("ItemSummary", { keyPath: "ItemSummaryID", unique: true });
-
-                
-
-            };
-        };
-        
-        OffDB.insert = function (DBName, tableName, items) {
-            var dbGlobal = indexedDB.open(sDBName, 1);
-            var db;
-            dbGlobal.onsuccess = function (event) {
-                db = event.target.result;
-
-                var tx = db.transaction(tableName, "readwrite");
-                var store = tx.objectStore(tableName);
-
-                $.each(items, function (key, value) {
-                    store.put(value);
-                });
-
-                tx.oncomplete = function () {
-                    db.close();
-                };
-
-            };
-        };
-        
-        OffDB.getById = function (DBName, tableName, id, callback) {
-            var dbGlobal = indexedDB.open(DBName, 1);
-            var db;
-            dbGlobal.onsuccess = function (event) {
-                db = event.target.result;
-
-                var tx = db.transaction(tableName, "readwrite");
-                var store = tx.objectStore(tableName);
-
-                var items = store.get(id);
-
-                items.onsuccess = function (event) {
-                    callback(event.target.result);
-                };
-
-                tx.oncomplete = function () {
-                    db.close();
-                };
-
-
-            };
-        };
-        
-        OffDB.getAll = function (DBName, tableName, callback) {
-            var dbGlobal = indexedDB.open(DBName, 1);
-            var db;
-            dbGlobal.onsuccess = function (event) {
-                db = event.target.result;
-
-                var tx = db.transaction(tableName, "readwrite");
-                var store = tx.objectStore(tableName);
-
-                var items = store.getAll();
-
-                items.onsuccess = function (event) {
-                    callback(event.target.result);
-                };
-                
-                tx.oncomplete = function () {
-                    db.close();
-                };
-
-
-            };
-        };
-
-        OffDB.remove = function (DBName, tableName, id) {
-            var dbGlobal = indexedDB.open(DBName, 1);
-            var db;
-            dbGlobal.onsuccess = function (event) {
-                db = event.target.result;
-
-                var tx = db.transaction(tableName, "readwrite");
-                var store = tx.objectStore(tableName);
-
-                var items = store.delete(id);
-
-                items.onsuccess = function (event) {
-                    alert("Successfully removed");
-                };
-
-                tx.oncomplete = function () {
-                    db.close();
-                };
-
-
-            };
-        };
-    </script>
-    <script>
-        var designations = new Array();
-        var users = new Array();
-        var branches = new Array();
-        var origCustomers = new Array();
-        var destCustomers = new Array();
-        var vans = new Array();
-        
-        var stationDesignation = {
-            userDesignationID: '1',
-            userDesignationLevel: '1',
-            userDesginationName: 'station'
-            
-        };
-
-        var encoderDesignation = {
-            userDesignationID: '2',
-            userDesignationLevel: '1',
-            userDesginationName: 'encoder'
-        };
-
-
-        var receiverDesignation = {
-            userDesignationID: '3',
-            userDesignationLevel: '1',
-            userDesginationName: 'receiver'
-        };
-        designations.push(stationDesignation);
-        designations.push(encoderDesignation);
-        designations.push(receiverDesignation);
-
-
-        var stationUser = {
-            Username: 'station',
-            Password: 'station123',
-            Lastname: 'Station',
-            FirstName: 'Test User',
-            UserDesignation: '1',
-            userBranch: '1'
-        };
-
-
-        var encoderUser = {
-            Username: 'encoder',
-            Password: 'encoder123',
-            Lastname: 'Encoder',
-            FirstName: 'Test User',
-            UserDesignation: '2',
-            userBranch: '1'
-        };
-
-        var receiverUser = {
-            Username: 'receiver',
-            Password: 'receiver123',
-            Lastname: 'Receiver',
-            FirstName: 'Test User',
-            UserDesignation: '3',
-            userBranch: '1'
-        };
-
-        users.push(stationUser);
-        users.push(encoderUser);
-        users.push(receiverUser);
-
-        var branchHO = {
-            branchid: '1',
-            branchshortcode: 'HO',
-            branchname: 'Head Office'
-        };
-
-        var branchDVO = {
-            branchid: '2',
-            branchshortcode: 'DVO',
-            branchname: 'Davao'
-        };
-
-        var branchMNL = {
-            branchid: '3',
-            branchshortcode: 'MNL',
-            branchname: 'Manila'
-        };
-
-        var branchBUT = {
-            branchid: '4',
-            branchshortcode: 'BUTUAN',
-            branchname: 'Butuan'
-        };
-
-
-        branches.push(branchHO);
-        branches.push(branchMNL);
-        branches.push(branchDVO);
-        branches.push(branchBUT);
-
-
-        var oCustOne = {
-            customerAccountNo: "a077000911",
-            customerFirstname: "Nathaniel",
-            customerLastname: "Degorio",
-            customerAddress: "Block 11 Lot 1 Samantha Homes, Toril, Davao City",
-            customerPhone: "09177993645",
-            customerBranch: "1"
-        };
-        var oCustTwo = {
-            customerAccountNo: "a077000912",
-            customerFirstname: "John",
-            customerLastname: "Doe",
-            customerAddress: "Block 11 Lot 1 Samantha Homes 2, Toril, Davao City",
-            customerPhone: "09177993645",
-            customerBranch: "1"
-        };
-        var oCustThree = {
-            customerAccountNo: "a077000913",
-            customerFirstname: "jane",
-            customerLastname: "Doe",
-            customerAddress: "Block 11 Lot 1 Samantha Homes 1, Toril, Davao City",
-            customerPhone: "09177993645",
-            customerBranch: "1"
-        };
-
-
-        origCustomers.push(oCustOne);
-        origCustomers.push(oCustTwo);
-        origCustomers.push(oCustThree);
-
-
-        var dCustOne = {
-            customerAccountNo: "a077000921",
-            customerFirstname: "Nathaniel",
-            customerLastname: "Degorio",
-            customerAddress: "Block 11 Lot 1 Samantha Homes, Toril, Davao City",
-            customerPhone: "09177993645",
-            customerBranch: "2"
-        };
-        var dCustTwo = {
-            customerAccountNo: "a077000922",
-            customerFirstname: "John Test",
-            customerLastname: "Doe",
-            customerAddress: "Block 11 Lot 1 Samantha Homes 2, Toril, Davao City",
-            customerPhone: "09177993645",
-            customerBranch: "2"
-        };
-        var dCustThree = {
-            customerAccountNo: "a077000923",
-            customerFirstname: "jane",
-            customerLastname: "Doe",
-            customerAddress: "Block 11 Lot 1 Samantha Homes 1, Toril, Davao City",
-            customerPhone: "09177993645",
-            customerBranch: "4"
-        };
-
-        var dCustOne1 = {
-            customerAccountNo: "a077000924",
-            customerFirstname: "Nathaniel Test",
-            customerLastname: "Degorio",
-            customerAddress: "Block 11 Lot 1 Samantha Homes, Toril, Davao City",
-            customerPhone: "09177993645",
-            customerBranch: "2"
-        };
-        var dCustTwo2 = {
-            customerAccountNo: "a077000925",
-            customerFirstname: "John",
-            customerLastname: "Doe Test",
-            customerAddress: "Block 11 Lot 1 Samantha Homes 2, Toril, Davao City",
-            customerPhone: "09177993645",
-            customerBranch: "4"
-        };
-        var dCustThree3 = {
-            customerAccountNo: "a077000926",
-            customerFirstname: "jane Test",
-            customerLastname: "Doe",
-            customerAddress: "Block 11 Lot 1 Samantha Homes 1, Toril, Davao City",
-            customerPhone: "09177993645",
-            customerBranch: "3"
-        };
-
-        var dCustOne11 = {
-            customerAccountNo: "a077000927",
-            customerFirstname: "Nathaniel Test",
-            customerLastname: "Degorio",
-            customerAddress: "Block 11 Lot 1 Samantha Homes, Toril, Davao City",
-            customerPhone: "09177993645",
-            customerBranch: "3"
-        };
-        var dCustTwo22 = {
-            customerAccountNo: "a077000928",
-            customerFirstname: "John Test",
-            customerLastname: "Doe",
-            customerAddress: "Block 11 Lot 1 Samantha Homes 2, Toril, Davao City",
-            customerPhone: "09177993645",
-            customerBranch: "3"
-        };
-        var dCustThree33 = {
-            customerAccountNo: "a077000929",
-            customerFirstname: "jane",
-            customerLastname: "Doe Test",
-            customerAddress: "Block 11 Lot 1 Samantha Homes 1, Toril, Davao City",
-            customerPhone: "09177993645",
-            customerBranch: "2"
-        };
-
-        destCustomers.push(dCustThree33);
-        destCustomers.push(dCustTwo22);
-        destCustomers.push(dCustOne11);
-        destCustomers.push(dCustThree3);
-        destCustomers.push(dCustTwo2);
-        destCustomers.push(dCustOne1);
-        destCustomers.push(dCustThree);
-        destCustomers.push(dCustTwo);
-        destCustomers.push(dCustOne);
-
-    </script>
-   
-
-
+    <!--
+        Sample for Calendar
+        <div class="ui uicalendar">
+            <div class="ui input left icon">
+                <i class=" icon"></i>
+                <input type="text" placeholder="Date/Time">
+            </div>
+        </div>
+    
+        -->
 
 </body>
 </html>
