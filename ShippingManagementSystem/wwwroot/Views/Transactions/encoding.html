@@ -43,33 +43,35 @@
 
 <div id="waybillForm" style="display:none; color:white;">
     <div class="container">
-        <div class="card blue-grey darken-1">
+        <div class="card blue-grey darken-1 small">
             <div class="card-content white-text" style="font-size: smaller; color: white;">
                 <div class="row">
                     <div class="col s12 m4 l4">
                        
                             <label style="color:white;">Tracking No.: </label>
-                            <input class="materialize" type="text" id="trackingno" disabled>
+                            <input class="browser-default" style="font-size: small; padding: 2px; background-color: white; border: none; border-radius: 2px; color: black; margin-left: 2px;" type="text" id="trackingno" disabled>
                      
                     </div>
                     <div class="col s12 m2 l2">
                         <label style="color:white;">Date: </label>
-                        <input class="materialize" data-toggle="datepicker" disabled id="createDate">
+                        <input class="browser-default" style="font-size: small; background-color: white; border: none; border-radius: 2px; color: black; margin-left: 2px;"  type="text" data-toggle="datepicker" id="createDate">
                     </div>
                     <div class="col s12 m2 l2">
                        
-                            <label style="color:white;">Route: </label>
-                            <input class="materialize" type="text" disabled id="route">
+                        <label style="color:white;">Route: </label>
+                        <input class="browser-default" style="font-size: small; background-color: white; border: none; border-radius: 2px; color: black; margin-left: 2px;" type="text" id="route">
                            
                        
                     </div>
                     <div class="col s12 m2 l2">
                         <label style="color:white;">Pickup Date: </label>
-                        <input class="materialize" data-toggle="datepicker" id="pickupDate">
+                        <input class="browser-default" style="font-size: small; background-color: white; border: none; border-radius: 2px; color: black; margin-left: 2px;" type="text" data-toggle="datepicker" id="pickupDate">
+
                     </div>
                     <div class="col s12 m2 l2">
                         <label style="color:white;">Delivered Date: </label>
-                        <input class="materialize" data-toggle="datepicker" id="deliveredDate">
+                        <input class="browser-default" style="font-size: small; background-color: white; border: none; border-radius: 2px; color: black; margin-left: 2px;" type="text" data-toggle="datepicker" id="deliveredDate">
+
                     </div>
                 </div>
                 <div class="row">
@@ -217,7 +219,7 @@
                 </div>
             </div>
             <div class="card-action">
-                <button class="btn teal" onclick="savewaybill();">
+                <button class="btn teal" onclick="();">
                     Save
                 </button>
             </div>
