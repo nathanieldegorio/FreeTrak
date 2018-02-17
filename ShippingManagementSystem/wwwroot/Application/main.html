@@ -1,41 +1,56 @@
-﻿<div id="qrprintarea" >
-    <div style="width:420px; max-height: 286px;">
-        <div class="ui grid" style="margin-top: 1px;">
-            <div class="six wide column" style="border: 1px solid black;">
-               
-                <center>
-                    <div style="word-wrap: break-word;"><br/>Jades Cargo Services</div>
-                    <br/>
-                    <div style="width: 100px; height: 100px; border: 1px solid black;">
-
-                    </div>
-                    <div>
-                        XXX to XXX
-                    </div>
-                    <div>
-                       XXXXX-XXXXX
-                    </div>
-                    <div><br /></div>
-                    <div>
-                        Van No. _________________
-                    </div>
-
-                </center>
-            </div>
-            <div class="nine wide column" style="border: 1px solid black;">
-               
-                <div style="font-size:larger;  margin-bottom: 1px;"><strong>From: </strong><u>Name Of Shipper Here</u></div>
-                <div style="word-wrap: break-word;  margin-bottom: 3px;"><strong>Address:</strong> <br/><u>Block 11 Lot 1 Super Exclusive Subdivision, Barangay One, New District, Davao City </u></div>
-                <div style=""><strong>Contact No.: </strong><u>XXXX-XXXX-XXX</u></div>
-                <div><br /></div>
-                <div style="font-size:larger;  margin-bottom: 3px;"><strong>To: </strong><u>Name Of Shipper Here</u></div>
-                <div style="word-wrap: break-word;  margin-bottom: 3px;"><strong>Address:</strong> <br /><u>Block 11 Lot 1 Super Exclusive Subdivision, Barangay One, New District, Davao City </u></div>
-                <div style=""><strong>Contact No.: </strong><u>XXXX-XXXX-XXX</u></div>
+﻿<div class="ui grid">
+    <div class="computer tablet only row">
+        <div class="column">
+            <div class="ui secondary pointing menu">
+                <div class="header"><h3>Jades Cargo Services</h3></div>
+                <div class="right menu">
+                    <a class="active item">
+                        Home
+                    </a>
+                    <a class="item">
+                        Messages
+                    </a>
+                    <a class="item">
+                        Friends
+                    </a>
+                    <a class="ui item">
+                        Logout
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="fifteen wide column">
+            <div class="breadcrumb">
+
+            </div>
+        </div>
+        <div class="one wide column" id="pingCheck">
+           
+        </div> 
+    </div>
+    <div class="row">
+        <div class="column">
+            <div class="ui raised segment" style="width: 100%; min-height: 450px;">
+                <div id="content">
+
+
+                </div>
+            </div>
+        </div>
+       
+    </div>
 </div>
 
-<div class="ui button" onclick="window.print();">
-    Print
-</div>
+
+<script>
+    $(document).ready(function () {
+
+        //default declarations
+        Utility.loadCrumbs();
+        Utility.pingScript();
+        Utility.loadTemplate("/Application/Administration/branch.list.html", "content");
+        
+    });
+</script>

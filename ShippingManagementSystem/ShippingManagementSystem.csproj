@@ -30,6 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\Application\Air\" />
+    <Folder Include="wwwroot\Application\Billing\" />
+    <Folder Include="wwwroot\Application\Reports\" />
+    <Folder Include="wwwroot\Application\Sea\" />
     <Folder Include="wwwroot\Libraries\qrjs\" />
   </ItemGroup>
 

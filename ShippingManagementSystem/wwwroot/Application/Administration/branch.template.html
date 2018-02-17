@@ -1,0 +1,50 @@
+﻿<div class="ui form">
+   <div class="ui grid">
+       <div class="row">
+          <div class="four wide computer six wide tablet sixteen wide mobile column">
+              <div class="field">
+                  <label>Branch Short Code</label>
+                  <input type="text" placeholder="" maxlength="5">
+              </div>
+          </div>
+          <div class="four wide computer six wide tablet sixteen wide mobile column">
+              <div class="field">
+                  <label>Branch Name</label>
+                  <input type="text" placeholder="" maxlength="35">
+              </div>
+          </div>
+       </div>
+       <div class="row">
+           <div class="eight wide computer twelve wide tablet sixteen wide mobile column">
+               <div class="field">
+                   <label>Address</label>
+                   <input type="text" placeholder="" maxlength="150">
+               </div>
+           </div>
+       </div>
+       <div class="row">
+           <div class="four wide computer six wide tablet sixteen wide mobile column">
+               <div class="field">
+                   <label>Parent Branch</label>
+                   <select class="ui search dropdown">
+                       <option value="0">None</option>
+                   </select>
+               </div>
+           </div>
+           <div class="four wide computer six wide tablet sixteen wide mobile column">
+               <div class="field">
+                   <label>&nbsp;</label>
+                   <div class="ui button teal">Save</div>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.ui.dropdown')
+            .dropdown()
+            ;
+    });
+
+</script>

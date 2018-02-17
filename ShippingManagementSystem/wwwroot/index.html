@@ -2,28 +2,48 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <title>Jades Cargo Service, Inc.</title>
     <link href="/Libraries/semantic/semantic.min.css" rel="stylesheet" />
     <link href="/Libraries/datepicker/calendar.min.css" rel="stylesheet" />
+    <style type="text/css">
+       body{
+           padding: 0em;
+       }
+    </style>
 
 </head>
 <body>
-    <div id="main">
+   
+    <div class="ui left vertical menu sidebar">
+        <a class="item">
+            Item 1
+        </a>
+        <a class="item">
+            Item 2
+        </a>
+        <a class="item">
+            Item 3
+        </a>
+    </div>
+    <div class="pusher">
+        <div class="ui grid">
+            <div class="mobile only row">
+                <div class="right aligned column">
+                    <div class="ui button" onclick="$('.sidebar').sidebar('toggle');"> Menu</div>
+                </div>
 
-        <div class="ui breadcrumb">
-            
-        </div>
-  
-        <div class="ui uicalendar">
-            <div class="ui mini input left icon">
-                <i class="calendar outline icon"></i>
-                <input type="text" placeholder="Date/Time">
             </div>
         </div>
-
-
-
+        <center>
+            <div id="main" style="width: 90%; text-align: left; margin-top: 32px;"></div>
+        </center>
+        
+       
+        
     </div>
+   
+
     <script src="/Libraries/Jquery/jquery-3.2.1.min.js"></script>
     <script src="/Libraries/qrjs/instascan.min.js"></script>
     <script src="/Libraries/semantic/semantic.min.js"></script>
@@ -109,8 +129,7 @@
             }
             return today = mm + '/' + dd + '/' + yyyy;
         }
-
-
+        
         Utility.loadCrumbs = function()
         {
             var current = window.location.href;
@@ -151,7 +170,34 @@
                 }
             });
         }
-     
+
+
+        Utility.pingScript = function () {
+
+            setInterval(function () {
+                jQuery.ajax({
+                url: "/ping.html",
+                dataType: 'text',
+                success: function (data) {
+                    // 
+                   // <div><i class="window close icon red"></i></div>
+                    //    <div><i class="refresh icon yellow"></i></div>
+                    if(data == "Online")
+                    {
+                        $('#pingCheck').html(`<div><i class="cloud icon green"></i></div>`);
+                    } else
+                    {
+                        $('#pingCheck').html(`<div><i class="window close icon red"></div>`);
+                    }
+                },
+                error: function () {
+                    $('#pingCheck').html(`<div><i class="window close icon red"></div>`);
+                },
+                async: true
+            });
+            }, 5000);
+            
+        }
     </script>
 
     <!-- main script here-->
@@ -173,8 +219,18 @@
                 <input type="text" placeholder="Date/Time">
             </div>
         </div>
-    
+
+  
+        <div class="ui uicalendar">
+            <div class="ui mini input left icon">
+                <i class="calendar outline icon"></i>
+                <input type="text" placeholder="Date/Time">
+            </div>
+        </div>
+
+
         -->
 
 </body>
 </html>
+

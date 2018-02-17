@@ -1,0 +1,63 @@
+﻿
+<div class="ui grid">
+    <div class="row">
+        <div class="column"></div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <table class="ui selectable celled table" ">
+                <thead>
+                    <tr>
+                        <th style="width: 30px;">
+                           &nbsp;
+                        </th>
+                        <th>
+                            Short Code
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Address
+                        </th>
+                        <th>
+                            Parent Branch
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <button class="ui button" style="width: 100%;" onclick="loadbranch();"><i class="search icon"></i></button>
+                        </td>
+                        <td>
+                            BUT
+                        </td>
+                        <td>
+                            Butuan
+                        </td>
+                        <td style="word-wrap: break-word;">
+                            Block 11 Lot 1 Super Exclusive Subdivision, Barangay One, New District, Davao City 
+                        </td>
+                        <td>
+                            Head Office
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
+<div class="ui fullscreen modal" id="branchModal">
+    <div class="header">Branch Details</div>
+    <div class="content" id="branchFrm"></div>
+</div>
+<script type="text/javascript">
+   
+    function loadbranch()
+    {
+        Utility.loadTemplate("/Application/Administration/branch.template.html", "content");
+    }
+       
+</script>
